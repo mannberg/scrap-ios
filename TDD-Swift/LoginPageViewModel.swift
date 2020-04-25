@@ -9,8 +9,24 @@
 import Foundation
 
 struct LoginPageViewModel {
-    var email: String = ""
-    var password: String = ""
+    //Input
+    mutating func didTapLoginButton() {
+        isShowingLoadingSpinner = true
+    }
+    
+    mutating func didSetEmailAdress(_ value: String) {
+        self.email = value
+    }
+    
+    mutating func didSetPassword(_ value: String) {
+        self.password = value
+    }
+    
+    //Output
+    private(set) var email: String = ""
+    private(set) var password: String = ""
+    private(set) var isShowingLoadingSpinner = false
+    
     var isValidEmail: Bool {
         email.matches(
             "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -23,12 +39,6 @@ struct LoginPageViewModel {
     }
     var loginButtonEnabled: Bool {
         isValidEmail && isValidPassword
-    }
-    
-    var isShowingLoadingSpinner = false
-    
-    mutating func didTapLoginButton() {
-        isShowingLoadingSpinner = true
     }
 }
 

@@ -30,14 +30,18 @@ class TDD_SwiftTests: XCTestCase {
     }
     
     func test_valid_email_and_password_gives_enabled_login_buton() {
-        viewModel.email = "joe@south.com"
-        viewModel.password = "abcd1234"
+        viewModel.didSetEmailAdress("joe@south.com")
+        viewModel.didSetPassword("abcd1234")
         XCTAssertTrue(viewModel.loginButtonEnabled)
     }
     
     func test_tapped_login_button_shows_spinner() {
         viewModel.didTapLoginButton()
         XCTAssertTrue(viewModel.isShowingLoadingSpinner)
+    }
+    
+    func test_newly_instantiated_view_model_should_not_show_loading_spinner() {
+        XCTAssertFalse(viewModel.isShowingLoadingSpinner)
     }
     
     func testPerformanceExample() throws {
