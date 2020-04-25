@@ -11,5 +11,13 @@ import Foundation
 struct LoginPageViewModel {
     var email: String = ""
     var password: String = ""
-    let loginButtonEnabled: Bool = false
+    var isValidEmail: Bool {
+        email == "joe@south.com"
+    }
+    var isValidPassword: Bool {
+        password == "abcd1234"
+    }
+    var loginButtonEnabled: Bool {
+        isValidEmail && isValidPassword
+    }
 }
