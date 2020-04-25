@@ -12,12 +12,22 @@ struct LoginPageViewModel {
     var email: String = ""
     var password: String = ""
     var isValidEmail: Bool {
-        email == "joe@south.com"
+        email.matches(
+            "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        )
     }
     var isValidPassword: Bool {
-        password == "abcd1234"
+        password.matches(
+            "^(?=.*[A-Za-z])(?=.*[0-9])(?!.*[^a-zA-Z0-9_!@#$&*]).{8,20}$"
+        )
     }
     var loginButtonEnabled: Bool {
         isValidEmail && isValidPassword
+    }
+}
+
+fileprivate extension String {
+    func matches(_ regex: String) -> Bool {
+        self.range(of: regex, options: .regularExpression) != nil
     }
 }
