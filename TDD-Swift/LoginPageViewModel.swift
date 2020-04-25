@@ -24,6 +24,12 @@ struct LoginPageViewModel {
     var loginButtonEnabled: Bool {
         isValidEmail && isValidPassword
     }
+    
+    var isShowingLoadingSpinner = false
+    
+    mutating func didTapLoginButton() {
+        isShowingLoadingSpinner = true
+    }
 }
 
 fileprivate extension String {
