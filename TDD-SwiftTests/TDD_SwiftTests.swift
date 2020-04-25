@@ -14,6 +14,7 @@ class TDD_SwiftTests: XCTestCase {
     
     override func setUpWithError() throws {
         viewModel = LoginPageViewModel()
+        CurrentAPI = API()
     }
 
     override func tearDownWithError() throws {
@@ -30,18 +31,37 @@ class TDD_SwiftTests: XCTestCase {
     }
     
     func test_valid_email_and_password_gives_enabled_login_buton() {
-        viewModel.didSetEmailAdress("joe@south.com")
-        viewModel.didSetPassword("abcd1234")
+        viewModel = .withCorrectCredentials
         XCTAssertTrue(viewModel.loginButtonEnabled)
     }
     
     func test_tapped_login_button_shows_spinner() {
+        viewModel = .withCorrectCredentials
         viewModel.didTapLoginButton()
         XCTAssertTrue(viewModel.isShowingLoadingSpinner)
     }
     
     func test_newly_instantiated_view_model_should_not_show_loading_spinner() {
         XCTAssertFalse(viewModel.isShowingLoadingSpinner)
+    }
+    
+    func test_should_not_be_able_to_tap_login_button_when_disabled() {
+        viewModel.didTapLoginButton()
+        XCTAssertFalse(viewModel.isShowingLoadingSpinner)
+    }
+    
+    func test_hide_spinner_on_server_error() {
+        let expectation = XCTestExpectation()
+        
+        viewModel = .withCorrectCredentials
+        CurrentAPI.login = { callback in
+            callback(.failure(.server))
+            XCTAssertFalse(self.viewModel.isShowingLoadingSpinner)
+            expectation.fulfill()
+        }
+        
+        viewModel.didTapLoginButton()
+        wait(for: [expectation], timeout: 0.1)
     }
     
     func testPerformanceExample() throws {
@@ -51,4 +71,13 @@ class TDD_SwiftTests: XCTestCase {
         }
     }
 
+}
+
+fileprivate extension LoginPageViewModel {
+    static var withCorrectCredentials: LoginPageViewModel {
+        let viewModel = LoginPageViewModel()
+        viewModel.didSetEmailAdress("joe@south.com")
+        viewModel.didSetPassword("abcd1234")
+        return viewModel
+    }
 }

@@ -8,17 +8,30 @@
 
 import Foundation
 
-struct LoginPageViewModel {
+class LoginPageViewModel {
     //Input
-    mutating func didTapLoginButton() {
+    func didTapLoginButton() {
+        guard loginButtonEnabled else {
+            return
+        }
+        
+        CurrentAPI.login { result in
+            switch result {
+            case .failure(_):
+                isShowingLoadingSpinner = false
+            default:
+                break
+            }
+        }
+        
         isShowingLoadingSpinner = true
     }
     
-    mutating func didSetEmailAdress(_ value: String) {
+    func didSetEmailAdress(_ value: String) {
         self.email = value
     }
     
-    mutating func didSetPassword(_ value: String) {
+    func didSetPassword(_ value: String) {
         self.password = value
     }
     
@@ -39,6 +52,21 @@ struct LoginPageViewModel {
     }
     var loginButtonEnabled: Bool {
         isValidEmail && isValidPassword
+    }
+}
+
+var CurrentAPI = API()
+
+
+struct API {
+    var login: ((Result<String, API.Error>) -> Void) -> Void = { _ in
+        
+    }
+}
+
+extension API {
+    enum Error: Swift.Error {
+        case server
     }
 }
 
