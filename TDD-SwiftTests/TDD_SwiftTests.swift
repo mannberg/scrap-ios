@@ -23,7 +23,13 @@ class TDD_SwiftTests: XCTestCase {
         let viewModel = LoginPageViewModel()
         XCTAssertFalse(viewModel.loginButtonEnabled)
     }
-
+    
+    func test_newly_instantiated_view_model_should_have_empty_email_and_password_fields() {
+        let viewModel = LoginPageViewModel()
+        XCTAssertTrue(viewModel.email.isEmpty)
+        XCTAssertTrue(viewModel.password.isEmpty)
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
