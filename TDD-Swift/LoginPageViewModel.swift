@@ -9,30 +9,28 @@
 import Foundation
 
 class LoginPageViewModel {
-    //Input
-    func didTapLoginButton() {
-        guard loginButtonEnabled else {
-            return
-        }
-        
-        CurrentAPI.login { result in
-            switch result {
-            case .failure(_):
-                isShowingLoadingSpinner = false
-            default:
-                break
+    func input(_ action: LoginPageViewModel.Action) {
+        switch action {
+        case .didTapLoginButton:
+            guard loginButtonEnabled else {
+                return
             }
+            
+            CurrentAPI.login { result in
+                switch result {
+                case .failure(_):
+                    isShowingLoadingSpinner = false
+                default:
+                    break
+                }
+            }
+            
+            isShowingLoadingSpinner = true
+        case .didSetEmailAdress(let value):
+            self.email = value
+        case .didSetPassword(let value):
+            self.password = value
         }
-        
-        isShowingLoadingSpinner = true
-    }
-    
-    func didSetEmailAdress(_ value: String) {
-        self.email = value
-    }
-    
-    func didSetPassword(_ value: String) {
-        self.password = value
     }
     
     //Output
@@ -52,6 +50,14 @@ class LoginPageViewModel {
     }
     var loginButtonEnabled: Bool {
         isValidEmail && isValidPassword
+    }
+}
+
+extension LoginPageViewModel {
+    enum Action {
+        case didTapLoginButton
+        case didSetEmailAdress(_ value: String)
+        case didSetPassword(_ value: String)
     }
 }
 
