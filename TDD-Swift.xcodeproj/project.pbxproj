@@ -14,6 +14,7 @@
 		3174F2652454AE85000AA1B0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3174F2642454AE85000AA1B0 /* Preview Assets.xcassets */; };
 		3174F2682454AE85000AA1B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3174F2662454AE85000AA1B0 /* LaunchScreen.storyboard */; };
 		3174F2732454AE85000AA1B0 /* TDD_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F2722454AE85000AA1B0 /* TDD_SwiftTests.swift */; };
+		3174F27E2454AFD8000AA1B0 /* LoginPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		3174F26E2454AE85000AA1B0 /* TDD-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TDD-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3174F2722454AE85000AA1B0 /* TDD_SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDD_SwiftTests.swift; sourceTree = "<group>"; };
 		3174F2742454AE85000AA1B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				3174F2662454AE85000AA1B0 /* LaunchScreen.storyboard */,
 				3174F2692454AE85000AA1B0 /* Info.plist */,
 				3174F2632454AE85000AA1B0 /* Preview Content */,
+				3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */,
 			);
 			path = "TDD-Swift";
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3174F25C2454AE7D000AA1B0 /* AppDelegate.swift in Sources */,
+				3174F27E2454AFD8000AA1B0 /* LoginPageViewModel.swift in Sources */,
 				3174F25E2454AE7D000AA1B0 /* SceneDelegate.swift in Sources */,
 				3174F2602454AE7D000AA1B0 /* ContentView.swift in Sources */,
 			);

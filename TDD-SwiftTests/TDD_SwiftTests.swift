@@ -21,9 +21,7 @@ class TDD_SwiftTests: XCTestCase {
 
     func test_empty_email_and_password_fields_gives_disabled_login_button() {
         let viewModel = LoginPageViewModel()
-        viewModel.email = ""
-        viewModel.password = ""
-        XCTAssertTrue(viewModel.loginButtonDisabled)
+        XCTAssertFalse(viewModel.loginButtonEnabled)
     }
 
     func testPerformanceExample() throws {
