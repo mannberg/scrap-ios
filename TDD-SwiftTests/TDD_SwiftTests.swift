@@ -31,7 +31,9 @@ class TDD_SwiftTests: XCTestCase {
     }
     
     func test_valid_email_and_password_gives_enabled_login_buton() {
-        let viewModel = LoginPageViewModel()
+        var viewModel = LoginPageViewModel()
+        viewModel.email = "joe@south.com"
+        viewModel.password = "abcd1234"
         XCTAssertTrue(viewModel.loginButtonEnabled)
     }
     
