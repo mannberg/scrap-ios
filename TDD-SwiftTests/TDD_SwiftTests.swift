@@ -19,9 +19,11 @@ class TDD_SwiftTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func test_empty_email_and_password_fields_gives_disabled_login_button() {
+        let viewModel = LoginPageViewModel()
+        viewModel.email = ""
+        viewModel.password = ""
+        XCTAssertTrue(viewModel.loginButtonDisabled)
     }
 
     func testPerformanceExample() throws {
