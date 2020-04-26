@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LoginPageViewModel {
+class LoginPageViewModel: ObservableObject, ViewModel {
     func input(_ action: LoginPageViewModel.Action) {
         switch action {
         case .didTapLoginButton:
@@ -16,7 +16,7 @@ class LoginPageViewModel {
                 return
             }
             
-            CurrentAPI.login { result in
+            Current.api.login { result in
                 switch result {
                 case .failure(_):
                     isShowingLoadingSpinner = false
@@ -34,22 +34,24 @@ class LoginPageViewModel {
     }
     
     //Output
-    private(set) var email: String = ""
-    private(set) var password: String = ""
+    @Published private(set) var email: String = ""
+    @Published private(set) var password: String = ""
     private(set) var isShowingLoadingSpinner = false
     
-    var isValidEmail: Bool {
+    var loginButtonEnabled: Bool {
+        isValidEmail && isValidPassword
+    }
+    
+    //Private helpers
+    private var isValidEmail: Bool {
         email.matches(
             "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         )
     }
-    var isValidPassword: Bool {
+    private var isValidPassword: Bool {
         password.matches(
             "^(?=.*[A-Za-z])(?=.*[0-9])(?!.*[^a-zA-Z0-9_!@#$&*]).{8,20}$"
         )
-    }
-    var loginButtonEnabled: Bool {
-        isValidEmail && isValidPassword
     }
 }
 
@@ -58,21 +60,6 @@ extension LoginPageViewModel {
         case didTapLoginButton
         case didSetEmailAdress(_ value: String)
         case didSetPassword(_ value: String)
-    }
-}
-
-var CurrentAPI = API()
-
-
-struct API {
-    var login: ((Result<String, API.Error>) -> Void) -> Void = { _ in
-        
-    }
-}
-
-extension API {
-    enum Error: Swift.Error {
-        case server
     }
 }
 

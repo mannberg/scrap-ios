@@ -14,7 +14,7 @@ class TDD_SwiftTests: XCTestCase {
     
     override func setUpWithError() throws {
         viewModel = LoginPageViewModel()
-        CurrentAPI = API()
+        Current = Environment()
     }
 
     override func tearDownWithError() throws {
@@ -54,7 +54,7 @@ class TDD_SwiftTests: XCTestCase {
         let expectation = XCTestExpectation()
         
         viewModel = .withCorrectCredentials
-        CurrentAPI.login = { callback in
+        Current.api.login = { callback in
             callback(.failure(.server))
             
             XCTAssertFalse(self.viewModel.isShowingLoadingSpinner)
@@ -71,7 +71,7 @@ class TDD_SwiftTests: XCTestCase {
         viewModel = .withCorrectCredentials
         let referenceViewModel = LoginPageViewModel.withCorrectCredentials
         
-        CurrentAPI.login = { callback in
+        Current.api.login = { callback in
             callback(.failure(.server))
             
             XCTAssertTrue(
@@ -97,6 +97,16 @@ class TDD_SwiftTests: XCTestCase {
         XCTAssertTrue(viewModel.loginButtonEnabled)
         viewModel.input(.didSetPassword(""))
         XCTAssertFalse(viewModel.loginButtonEnabled)
+    }
+    
+    func test_viewModel_has_binding_helper() {
+        let binding = self.viewModel.binding(
+            get: \.email,
+            toAction: { .didSetEmailAdress($0) }
+        )
+        let email = "joe@south.com"
+        viewModel.input(.didSetEmailAdress(email))
+        XCTAssertTrue(binding.wrappedValue == email)
     }
     
     func testPerformanceExample() throws {
