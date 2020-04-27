@@ -8,6 +8,9 @@
 
 import Foundation
 
+typealias RequestCallback<Value> = (Result<Value, API.Error>) -> Void
+typealias Request<Value> = (RequestCallback<Value>) -> Void
+
 var Current = Environment()
 
 struct Environment {
@@ -15,8 +18,8 @@ struct Environment {
 }
 
 struct API {
-    var login: ((Result<String, API.Error>) -> Void) -> Void = { _ in
-        
+    var login: Request<String> = { _ in
+
     }
 }
 

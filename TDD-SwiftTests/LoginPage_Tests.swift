@@ -9,7 +9,7 @@
 import XCTest
 @testable import TDD_Swift
 
-class TDD_SwiftTests: XCTestCase {
+class LoginPage_Tests: XCTestCase {
     var viewModel: LoginPageViewModel!
     
     override func setUpWithError() throws {
@@ -37,7 +37,7 @@ class TDD_SwiftTests: XCTestCase {
     
     func test_tapped_login_button_shows_spinner() {
         viewModel = .withCorrectCredentials
-        viewModel.input(.didTapLoginButton)
+        viewModel.input(.didTapLoginButton())
         XCTAssertTrue(viewModel.isShowingLoadingSpinner)
     }
     
@@ -46,43 +46,42 @@ class TDD_SwiftTests: XCTestCase {
     }
     
     func test_should_not_be_able_to_tap_login_button_when_disabled() {
-        viewModel.input(.didTapLoginButton)
+        viewModel.input(.didTapLoginButton())
         XCTAssertFalse(viewModel.isShowingLoadingSpinner)
     }
     
     func test_hide_spinner_on_error() {
-        let expectation = XCTestExpectation()
-        
         viewModel = .withCorrectCredentials
-        Current.api.login = { callback in
-            callback(.failure(.server))
-            
-            XCTAssertFalse(self.viewModel.isShowingLoadingSpinner)
-            expectation.fulfill()
-        }
         
-        viewModel.input(.didTapLoginButton)
-        wait(for: [expectation], timeout: 0.1)
+        viewModel.input(.didTapLoginButton() { callback in
+            XCTAssertTrue(self.viewModel.isShowingLoadingSpinner)
+            callback(.failure(.server))
+            XCTAssertFalse(self.viewModel.isShowingLoadingSpinner)
+        })
+    }
+    
+    func test_hide_spinner_on_success() {
+        viewModel = .withCorrectCredentials
+        
+        viewModel.input(.didTapLoginButton() { callback in
+            XCTAssertTrue(self.viewModel.isShowingLoadingSpinner)
+            callback(.success(""))
+            XCTAssertFalse(self.viewModel.isShowingLoadingSpinner)
+        })
     }
     
     func test_email_and_password_should_keep_values_on_error() {
-        let expectation = XCTestExpectation()
-        
         viewModel = .withCorrectCredentials
         let referenceViewModel = LoginPageViewModel.withCorrectCredentials
         
-        Current.api.login = { callback in
+        viewModel.input(.didTapLoginButton() { callback in
             callback(.failure(.server))
             
             XCTAssertTrue(
                 self.viewModel.email == referenceViewModel.email &&
                 self.viewModel.password == referenceViewModel.password
             )
-            expectation.fulfill()
-        }
-        
-        viewModel.input(.didTapLoginButton)
-        wait(for: [expectation], timeout: 0.1)
+        })
     }
     
     func test_enabled_login_button_should_become_disabled_when_email_is_invalid() {

@@ -11,21 +11,22 @@ import Foundation
 class LoginPageViewModel: ObservableObject, ViewModel {
     func input(_ action: LoginPageViewModel.Action) {
         switch action {
-        case .didTapLoginButton:
+        case .didTapLoginButton(let request):
             guard loginButtonEnabled else {
                 return
             }
             
-            Current.api.login { result in
+            isShowingLoadingSpinner = true
+            
+            request { result in
                 switch result {
                 case .failure(_):
                     isShowingLoadingSpinner = false
                 default:
-                    break
+                    isShowingLoadingSpinner = false
                 }
             }
             
-            isShowingLoadingSpinner = true
         case .didSetEmailAdress(let value):
             self.email = value
         case .didSetPassword(let value):
@@ -57,7 +58,7 @@ class LoginPageViewModel: ObservableObject, ViewModel {
 
 extension LoginPageViewModel {
     enum Action {
-        case didTapLoginButton
+        case didTapLoginButton(request: Request<String> = Current.api.login)
         case didSetEmailAdress(_ value: String)
         case didSetPassword(_ value: String)
     }

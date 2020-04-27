@@ -15,7 +15,7 @@
 		3174F2622454AE85000AA1B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3174F2612454AE85000AA1B0 /* Assets.xcassets */; };
 		3174F2652454AE85000AA1B0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3174F2642454AE85000AA1B0 /* Preview Assets.xcassets */; };
 		3174F2682454AE85000AA1B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3174F2662454AE85000AA1B0 /* LaunchScreen.storyboard */; };
-		3174F2732454AE85000AA1B0 /* TDD_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F2722454AE85000AA1B0 /* TDD_SwiftTests.swift */; };
+		3174F2732454AE85000AA1B0 /* LoginPage_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F2722454AE85000AA1B0 /* LoginPage_Tests.swift */; };
 		3174F27E2454AFD8000AA1B0 /* LoginPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */; };
 		3174F280245606A1000AA1B0 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F27F245606A1000AA1B0 /* Environment.swift */; };
 /* End PBXBuildFile section */
@@ -42,7 +42,7 @@
 		3174F2672454AE85000AA1B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3174F2692454AE85000AA1B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3174F26E2454AE85000AA1B0 /* TDD-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TDD-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3174F2722454AE85000AA1B0 /* TDD_SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDD_SwiftTests.swift; sourceTree = "<group>"; };
+		3174F2722454AE85000AA1B0 /* LoginPage_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage_Tests.swift; sourceTree = "<group>"; };
 		3174F2742454AE85000AA1B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewModel.swift; sourceTree = "<group>"; };
 		3174F27F245606A1000AA1B0 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -74,6 +74,23 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		3127DD6A24562A03009551D8 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				3127DD6B24562A1D009551D8 /* LoginPage */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		3127DD6B24562A1D009551D8 /* LoginPage */ = {
+			isa = PBXGroup;
+			children = (
+				3174F25F2454AE7D000AA1B0 /* LoginPage.swift */,
+				3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */,
+			);
+			path = LoginPage;
+			sourceTree = "<group>";
+		};
 		3174F24F2454AE7D000AA1B0 = {
 			isa = PBXGroup;
 			children = (
@@ -95,15 +112,14 @@
 		3174F25A2454AE7D000AA1B0 /* TDD-Swift */ = {
 			isa = PBXGroup;
 			children = (
+				3127DD6A24562A03009551D8 /* Pages */,
 				3127DD6524561974009551D8 /* Components */,
 				3174F25B2454AE7D000AA1B0 /* AppDelegate.swift */,
 				3174F25D2454AE7D000AA1B0 /* SceneDelegate.swift */,
-				3174F25F2454AE7D000AA1B0 /* LoginPage.swift */,
 				3174F2612454AE85000AA1B0 /* Assets.xcassets */,
 				3174F2662454AE85000AA1B0 /* LaunchScreen.storyboard */,
 				3174F2692454AE85000AA1B0 /* Info.plist */,
 				3174F2632454AE85000AA1B0 /* Preview Content */,
-				3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */,
 				3174F27F245606A1000AA1B0 /* Environment.swift */,
 				3127DD6824561C91009551D8 /* ViewModel.swift */,
 			);
@@ -121,7 +137,7 @@
 		3174F2712454AE85000AA1B0 /* TDD-SwiftTests */ = {
 			isa = PBXGroup;
 			children = (
-				3174F2722454AE85000AA1B0 /* TDD_SwiftTests.swift */,
+				3174F2722454AE85000AA1B0 /* LoginPage_Tests.swift */,
 				3174F2742454AE85000AA1B0 /* Info.plist */,
 			);
 			path = "TDD-SwiftTests";
@@ -242,7 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3174F2732454AE85000AA1B0 /* TDD_SwiftTests.swift in Sources */,
+				3174F2732454AE85000AA1B0 /* LoginPage_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

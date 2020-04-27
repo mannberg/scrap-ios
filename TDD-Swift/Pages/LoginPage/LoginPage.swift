@@ -31,7 +31,7 @@ struct LoginPage: View {
             )
 
             Button("Login") {
-                self.viewModel.input(.didTapLoginButton)
+                self.viewModel.input(.didTapLoginButton())
             }.disabled(!viewModel.loginButtonEnabled)
         }
     }
