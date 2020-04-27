@@ -26,7 +26,10 @@ class LoginPageViewModel: ObservableObject, ViewModel {
                     isShowingLoadingSpinner = false
                 }
             }
-            
+        case .didTapRegisterButton:
+            isPresentingRegisterPage = true
+        case .didDismissRegisterPage:
+            isPresentingRegisterPage = false
         case .didSetEmailAdress(let value):
             self.email = value
         case .didSetPassword(let value):
@@ -37,6 +40,7 @@ class LoginPageViewModel: ObservableObject, ViewModel {
     //Output
     @Published private(set) var email: String = ""
     @Published private(set) var password: String = ""
+    @Published private(set) var isPresentingRegisterPage: Bool = false
     private(set) var isShowingLoadingSpinner = false
     
     var loginButtonEnabled: Bool {
@@ -59,6 +63,8 @@ class LoginPageViewModel: ObservableObject, ViewModel {
 extension LoginPageViewModel {
     enum Action {
         case didTapLoginButton(request: Request<String> = Current.api.login)
+        case didTapRegisterButton
+        case didDismissRegisterPage
         case didSetEmailAdress(_ value: String)
         case didSetPassword(_ value: String)
     }

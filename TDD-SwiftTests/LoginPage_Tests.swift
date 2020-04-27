@@ -108,6 +108,18 @@ class LoginPage_Tests: XCTestCase {
         XCTAssertTrue(binding.wrappedValue == email)
     }
     
+    func test_register_button_tap_presents_register_page() {
+        viewModel.input(.didTapRegisterButton)
+        XCTAssertTrue(viewModel.isPresentingRegisterPage)
+    }
+    
+    func test_dismissing_register_page_makes_it_not_presenting() {
+        viewModel.input(.didTapRegisterButton)
+        XCTAssertTrue(viewModel.isPresentingRegisterPage)
+        viewModel.input(.didDismissRegisterPage)
+        XCTAssertFalse(viewModel.isPresentingRegisterPage)
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

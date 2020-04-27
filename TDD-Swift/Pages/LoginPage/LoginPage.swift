@@ -33,6 +33,13 @@ struct LoginPage: View {
             Button("Login") {
                 self.viewModel.input(.didTapLoginButton())
             }.disabled(!viewModel.loginButtonEnabled)
+            
+            Button(action: { self.viewModel.input(.didTapRegisterButton) }, label: { Text("Register") }).sheet(isPresented: viewModel.binding(
+                get: \.isPresentingRegisterPage,
+                toAction: { _ in .didDismissRegisterPage }
+            )) {
+                Text("Modal")
+            }
         }
     }
 }
