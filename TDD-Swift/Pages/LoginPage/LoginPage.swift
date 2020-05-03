@@ -19,24 +19,24 @@ struct LoginPage: View {
                 placeholder: "Email adress",
                 binding: self.viewModel.binding(
                     get: \.email,
-                    toAction: { .didSetEmailAdress($0) }
+                    toAction: { .setEmailAdress($0) }
                 )
             )
             Input(
                 placeholder: "Password",
                 binding: self.viewModel.binding(
                     get: \.password,
-                    toAction: { .didSetPassword($0) }
+                    toAction: { .setPassword($0) }
                 )
             )
 
             Button("Login") {
-                self.viewModel.input(.didTapLoginButton())
+                self.viewModel.input(.tapLoginButton())
             }.disabled(!viewModel.loginButtonEnabled)
             
-            Button(action: { self.viewModel.input(.didTapRegisterButton) }, label: { Text("Register") }).sheet(isPresented: viewModel.binding(
+            Button(action: { self.viewModel.input(.tapRegisterButton) }, label: { Text("Register") }).sheet(isPresented: viewModel.binding(
                 get: \.isPresentingRegisterPage,
-                toAction: { _ in .didDismissRegisterPage }
+                toAction: { _ in .dismissRegisterPage }
             )) {
                 Text("Modal")
             }

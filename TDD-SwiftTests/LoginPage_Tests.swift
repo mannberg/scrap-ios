@@ -37,7 +37,7 @@ class LoginPage_Tests: XCTestCase {
     
     func test_tapped_login_button_shows_spinner() {
         viewModel = .withCorrectCredentials
-        viewModel.input(.didTapLoginButton())
+        viewModel.input(.tapLoginButton())
         XCTAssertTrue(viewModel.isShowingLoadingSpinner)
     }
     
@@ -46,14 +46,14 @@ class LoginPage_Tests: XCTestCase {
     }
     
     func test_should_not_be_able_to_tap_login_button_when_disabled() {
-        viewModel.input(.didTapLoginButton())
+        viewModel.input(.tapLoginButton())
         XCTAssertFalse(viewModel.isShowingLoadingSpinner)
     }
     
     func test_hide_spinner_on_error() {
         viewModel = .withCorrectCredentials
         
-        viewModel.input(.didTapLoginButton() { callback in
+        viewModel.input(.tapLoginButton() { callback in
             XCTAssertTrue(self.viewModel.isShowingLoadingSpinner)
             callback(.failure(.server))
             XCTAssertFalse(self.viewModel.isShowingLoadingSpinner)
@@ -63,7 +63,7 @@ class LoginPage_Tests: XCTestCase {
     func test_hide_spinner_on_success() {
         viewModel = .withCorrectCredentials
         
-        viewModel.input(.didTapLoginButton() { callback in
+        viewModel.input(.tapLoginButton() { callback in
             XCTAssertTrue(self.viewModel.isShowingLoadingSpinner)
             callback(.success(""))
             XCTAssertFalse(self.viewModel.isShowingLoadingSpinner)
@@ -74,7 +74,7 @@ class LoginPage_Tests: XCTestCase {
         viewModel = .withCorrectCredentials
         let referenceViewModel = LoginPageViewModel.withCorrectCredentials
         
-        viewModel.input(.didTapLoginButton() { callback in
+        viewModel.input(.tapLoginButton() { callback in
             callback(.failure(.server))
             
             XCTAssertTrue(
@@ -87,53 +87,45 @@ class LoginPage_Tests: XCTestCase {
     func test_enabled_login_button_should_become_disabled_when_email_is_invalid() {
         viewModel = .withCorrectCredentials
         XCTAssertTrue(viewModel.loginButtonEnabled)
-        viewModel.input(.didSetEmailAdress(""))
+        viewModel.input(.setEmailAdress(""))
         XCTAssertFalse(viewModel.loginButtonEnabled)
     }
     
     func test_enabled_login_button_should_become_disabled_when_password_is_invalid() {
         viewModel = .withCorrectCredentials
         XCTAssertTrue(viewModel.loginButtonEnabled)
-        viewModel.input(.didSetPassword(""))
+        viewModel.input(.setPassword(""))
         XCTAssertFalse(viewModel.loginButtonEnabled)
     }
     
     func test_viewModel_has_binding_helper() {
         let binding = self.viewModel.binding(
             get: \.email,
-            toAction: { .didSetEmailAdress($0) }
+            toAction: { .setEmailAdress($0) }
         )
         let email = "joe@south.com"
-        viewModel.input(.didSetEmailAdress(email))
+        viewModel.input(.setEmailAdress(email))
         XCTAssertTrue(binding.wrappedValue == email)
     }
     
     func test_register_button_tap_presents_register_page() {
-        viewModel.input(.didTapRegisterButton)
+        viewModel.input(.tapRegisterButton)
         XCTAssertTrue(viewModel.isPresentingRegisterPage)
     }
     
     func test_dismissing_register_page_makes_it_not_presenting() {
-        viewModel.input(.didTapRegisterButton)
+        viewModel.input(.tapRegisterButton)
         XCTAssertTrue(viewModel.isPresentingRegisterPage)
-        viewModel.input(.didDismissRegisterPage)
+        viewModel.input(.dismissRegisterPage)
         XCTAssertFalse(viewModel.isPresentingRegisterPage)
     }
-    
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
 
 fileprivate extension LoginPageViewModel {
     static var withCorrectCredentials: LoginPageViewModel {
         let viewModel = LoginPageViewModel()
-        viewModel.input(.didSetEmailAdress("joe@south.com"))
-        viewModel.input(.didSetPassword("abcd1234"))
+        viewModel.input(.setEmailAdress("joe@south.com"))
+        viewModel.input(.setPassword("abcd1234"))
         return viewModel
     }
 }

@@ -3,12 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		3127DD6724561990009551D8 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127DD6624561990009551D8 /* Input.swift */; };
 		3127DD6924561C91009551D8 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127DD6824561C91009551D8 /* ViewModel.swift */; };
+		3127DD6D245778DF009551D8 /* RegisterPage_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127DD6C245778DF009551D8 /* RegisterPage_Tests.swift */; };
+		3127DD702457791A009551D8 /* RegisterPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127DD6F2457791A009551D8 /* RegisterPageViewModel.swift */; };
+		3127DD73245781C7009551D8 /* IsValid in Frameworks */ = {isa = PBXBuildFile; productRef = 3127DD72245781C7009551D8 /* IsValid */; };
 		3174F25C2454AE7D000AA1B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F25B2454AE7D000AA1B0 /* AppDelegate.swift */; };
 		3174F25E2454AE7D000AA1B0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F25D2454AE7D000AA1B0 /* SceneDelegate.swift */; };
 		3174F2602454AE7D000AA1B0 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F25F2454AE7D000AA1B0 /* LoginPage.swift */; };
@@ -33,6 +36,8 @@
 /* Begin PBXFileReference section */
 		3127DD6624561990009551D8 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		3127DD6824561C91009551D8 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		3127DD6C245778DF009551D8 /* RegisterPage_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPage_Tests.swift; sourceTree = "<group>"; };
+		3127DD6F2457791A009551D8 /* RegisterPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPageViewModel.swift; sourceTree = "<group>"; };
 		3174F2582454AE7D000AA1B0 /* TDD-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TDD-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3174F25B2454AE7D000AA1B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3174F25D2454AE7D000AA1B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3127DD73245781C7009551D8 /* IsValid in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +83,7 @@
 		3127DD6A24562A03009551D8 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				3127DD6E24577903009551D8 /* RegisterPage */,
 				3127DD6B24562A1D009551D8 /* LoginPage */,
 			);
 			path = Pages;
@@ -89,6 +96,14 @@
 				3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */,
 			);
 			path = LoginPage;
+			sourceTree = "<group>";
+		};
+		3127DD6E24577903009551D8 /* RegisterPage */ = {
+			isa = PBXGroup;
+			children = (
+				3127DD6F2457791A009551D8 /* RegisterPageViewModel.swift */,
+			);
+			path = RegisterPage;
 			sourceTree = "<group>";
 		};
 		3174F24F2454AE7D000AA1B0 = {
@@ -139,6 +154,7 @@
 			children = (
 				3174F2722454AE85000AA1B0 /* LoginPage_Tests.swift */,
 				3174F2742454AE85000AA1B0 /* Info.plist */,
+				3127DD6C245778DF009551D8 /* RegisterPage_Tests.swift */,
 			);
 			path = "TDD-SwiftTests";
 			sourceTree = "<group>";
@@ -159,6 +175,9 @@
 			dependencies = (
 			);
 			name = "TDD-Swift";
+			packageProductDependencies = (
+				3127DD72245781C7009551D8 /* IsValid */,
+			);
 			productName = "TDD-Swift";
 			productReference = 3174F2582454AE7D000AA1B0 /* TDD-Swift.app */;
 			productType = "com.apple.product-type.application";
@@ -209,6 +228,9 @@
 				Base,
 			);
 			mainGroup = 3174F24F2454AE7D000AA1B0;
+			packageReferences = (
+				3127DD71245781C7009551D8 /* XCRemoteSwiftPackageReference "IsValid" */,
+			);
 			productRefGroup = 3174F2592454AE7D000AA1B0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -248,6 +270,7 @@
 				3174F25C2454AE7D000AA1B0 /* AppDelegate.swift in Sources */,
 				3174F27E2454AFD8000AA1B0 /* LoginPageViewModel.swift in Sources */,
 				3174F25E2454AE7D000AA1B0 /* SceneDelegate.swift in Sources */,
+				3127DD702457791A009551D8 /* RegisterPageViewModel.swift in Sources */,
 				3174F2602454AE7D000AA1B0 /* LoginPage.swift in Sources */,
 				3174F280245606A1000AA1B0 /* Environment.swift in Sources */,
 				3127DD6924561C91009551D8 /* ViewModel.swift in Sources */,
@@ -259,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3174F2732454AE85000AA1B0 /* LoginPage_Tests.swift in Sources */,
+				3127DD6D245778DF009551D8 /* RegisterPage_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +533,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3127DD71245781C7009551D8 /* XCRemoteSwiftPackageReference "IsValid" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mannberg/IsValid";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3127DD72245781C7009551D8 /* IsValid */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3127DD71245781C7009551D8 /* XCRemoteSwiftPackageReference "IsValid" */;
+			productName = IsValid;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3174F2502454AE7D000AA1B0 /* Project object */;
 }

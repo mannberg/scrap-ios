@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "IsValid",
+        "repositoryURL": "https://github.com/mannberg/IsValid",
+        "state": {
+          "branch": null,
+          "revision": "f3fab23b452367815ae9a4a541047c6821911eed",
+          "version": "1.0.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

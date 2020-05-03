@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import IsValid
 
 class LoginPageViewModel: ObservableObject, ViewModel {
     func input(_ action: LoginPageViewModel.Action) {
         switch action {
-        case .didTapLoginButton(let request):
+        case .tapLoginButton(let request):
             guard loginButtonEnabled else {
                 return
             }
@@ -26,13 +27,13 @@ class LoginPageViewModel: ObservableObject, ViewModel {
                     isShowingLoadingSpinner = false
                 }
             }
-        case .didTapRegisterButton:
+        case .tapRegisterButton:
             isPresentingRegisterPage = true
-        case .didDismissRegisterPage:
+        case .dismissRegisterPage:
             isPresentingRegisterPage = false
-        case .didSetEmailAdress(let value):
+        case .setEmailAdress(let value):
             self.email = value
-        case .didSetPassword(let value):
+        case .setPassword(let value):
             self.password = value
         }
     }
@@ -49,29 +50,19 @@ class LoginPageViewModel: ObservableObject, ViewModel {
     
     //Private helpers
     private var isValidEmail: Bool {
-        email.matches(
-            "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        )
+        IsValid.email(self.email)
     }
     private var isValidPassword: Bool {
-        password.matches(
-            "^(?=.*[A-Za-z])(?=.*[0-9])(?!.*[^a-zA-Z0-9_!@#$&*]).{8,20}$"
-        )
+        IsValid.password(self.password)
     }
 }
 
 extension LoginPageViewModel {
     enum Action {
-        case didTapLoginButton(request: Request<String> = Current.api.login)
-        case didTapRegisterButton
-        case didDismissRegisterPage
-        case didSetEmailAdress(_ value: String)
-        case didSetPassword(_ value: String)
-    }
-}
-
-fileprivate extension String {
-    func matches(_ regex: String) -> Bool {
-        self.range(of: regex, options: .regularExpression) != nil
+        case tapLoginButton(request: Request<String> = Current.api.login)
+        case tapRegisterButton
+        case dismissRegisterPage
+        case setEmailAdress(_ value: String)
+        case setPassword(_ value: String)
     }
 }
