@@ -18,13 +18,16 @@ class LoginPageViewModel: ObservableObject, ViewModel {
             }
             
             isShowingLoadingSpinner = true
+            registerButtonEnabled = false
             
             request { result in
                 switch result {
                 case .failure(_):
                     isShowingLoadingSpinner = false
+                    registerButtonEnabled = true
                 default:
                     isShowingLoadingSpinner = false
+                    registerButtonEnabled = true
                 }
             }
         case .tapRegisterButton:
@@ -42,6 +45,7 @@ class LoginPageViewModel: ObservableObject, ViewModel {
     @Published private(set) var email: String = ""
     @Published private(set) var password: String = ""
     @Published private(set) var isPresentingRegisterPage: Bool = false
+    @Published private(set) var registerButtonEnabled: Bool = true
     private(set) var isShowingLoadingSpinner = false
     
     var loginButtonEnabled: Bool {

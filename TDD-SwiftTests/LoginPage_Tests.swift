@@ -41,6 +41,12 @@ class LoginPage_Tests: XCTestCase {
         XCTAssertTrue(viewModel.isShowingLoadingSpinner)
     }
     
+    func test_tapped_login_button_disables_register_button() {
+        viewModel = .withCorrectCredentials
+        viewModel.input(.tapLoginButton())
+        XCTAssertFalse(viewModel.registerButtonEnabled)
+    }
+    
     func test_newly_instantiated_view_model_should_not_show_loading_spinner() {
         XCTAssertFalse(viewModel.isShowingLoadingSpinner)
     }
@@ -57,6 +63,26 @@ class LoginPage_Tests: XCTestCase {
             XCTAssertTrue(self.viewModel.isShowingLoadingSpinner)
             callback(.failure(.server))
             XCTAssertFalse(self.viewModel.isShowingLoadingSpinner)
+        })
+    }
+    
+    func test_enable_register_button_on_login_error() {
+        viewModel = .withCorrectCredentials
+        
+        viewModel.input(.tapLoginButton() { callback in
+            XCTAssertFalse(self.viewModel.registerButtonEnabled)
+            callback(.failure(.server))
+            XCTAssertTrue(self.viewModel.registerButtonEnabled)
+        })
+    }
+    
+    func test_enable_register_button_on_login_success() {
+        viewModel = .withCorrectCredentials
+        
+        viewModel.input(.tapLoginButton() { callback in
+            XCTAssertFalse(self.viewModel.registerButtonEnabled)
+            callback(.success(""))
+            XCTAssertTrue(self.viewModel.registerButtonEnabled)
         })
     }
     

@@ -28,6 +28,7 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
     @Published private(set) var confirmedPassword: String = ""
     @Published private(set) var displayName: String = ""
     
+    //Output
     var registerButtonEnabled: Bool {
         false
     }
