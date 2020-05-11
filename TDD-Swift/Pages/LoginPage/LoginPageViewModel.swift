@@ -20,14 +20,14 @@ class LoginPageViewModel: ObservableObject, ViewModel {
             isShowingLoadingSpinner = true
             registerButtonEnabled = false
             
-            request { result in
+            request { [weak self] result in
                 switch result {
                 case .failure(_):
-                    isShowingLoadingSpinner = false
-                    registerButtonEnabled = true
+                    self?.isShowingLoadingSpinner = false
+                    self?.registerButtonEnabled = true
                 default:
-                    isShowingLoadingSpinner = false
-                    registerButtonEnabled = true
+                    self?.isShowingLoadingSpinner = false
+                    self?.registerButtonEnabled = true
                 }
             }
         case .tapRegisterButton:

@@ -12,6 +12,8 @@
 		3127DD6D245778DF009551D8 /* RegisterPage_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127DD6C245778DF009551D8 /* RegisterPage_Tests.swift */; };
 		3127DD702457791A009551D8 /* RegisterPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3127DD6F2457791A009551D8 /* RegisterPageViewModel.swift */; };
 		3127DD73245781C7009551D8 /* IsValid in Frameworks */ = {isa = PBXBuildFile; productRef = 3127DD72245781C7009551D8 /* IsValid */; };
+		313524FD2469D66D00BC6441 /* LiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313524FC2469D66D00BC6441 /* LiveTests.swift */; };
+		313525062469E7E100BC6441 /* scrap-data-models in Frameworks */ = {isa = PBXBuildFile; productRef = 313525052469E7E100BC6441 /* scrap-data-models */; };
 		3174F25C2454AE7D000AA1B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F25B2454AE7D000AA1B0 /* AppDelegate.swift */; };
 		3174F25E2454AE7D000AA1B0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F25D2454AE7D000AA1B0 /* SceneDelegate.swift */; };
 		3174F2602454AE7D000AA1B0 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F25F2454AE7D000AA1B0 /* LoginPage.swift */; };
@@ -24,6 +26,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		313524FF2469D66D00BC6441 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3174F2502454AE7D000AA1B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3174F2572454AE7D000AA1B0;
+			remoteInfo = "TDD-Swift";
+		};
 		3174F26F2454AE85000AA1B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3174F2502454AE7D000AA1B0 /* Project object */;
@@ -38,6 +47,9 @@
 		3127DD6824561C91009551D8 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		3127DD6C245778DF009551D8 /* RegisterPage_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPage_Tests.swift; sourceTree = "<group>"; };
 		3127DD6F2457791A009551D8 /* RegisterPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPageViewModel.swift; sourceTree = "<group>"; };
+		313524FA2469D66D00BC6441 /* LiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		313524FC2469D66D00BC6441 /* LiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTests.swift; sourceTree = "<group>"; };
+		313524FE2469D66D00BC6441 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3174F2582454AE7D000AA1B0 /* TDD-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TDD-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3174F25B2454AE7D000AA1B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3174F25D2454AE7D000AA1B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,10 +66,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		313524F72469D66D00BC6441 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3174F2552454AE7D000AA1B0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				313525062469E7E100BC6441 /* scrap-data-models in Frameworks */,
 				3127DD73245781C7009551D8 /* IsValid in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -106,11 +126,21 @@
 			path = RegisterPage;
 			sourceTree = "<group>";
 		};
+		313524FB2469D66D00BC6441 /* LiveTests */ = {
+			isa = PBXGroup;
+			children = (
+				313524FC2469D66D00BC6441 /* LiveTests.swift */,
+				313524FE2469D66D00BC6441 /* Info.plist */,
+			);
+			path = LiveTests;
+			sourceTree = "<group>";
+		};
 		3174F24F2454AE7D000AA1B0 = {
 			isa = PBXGroup;
 			children = (
 				3174F25A2454AE7D000AA1B0 /* TDD-Swift */,
 				3174F2712454AE85000AA1B0 /* TDD-SwiftTests */,
+				313524FB2469D66D00BC6441 /* LiveTests */,
 				3174F2592454AE7D000AA1B0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -120,6 +150,7 @@
 			children = (
 				3174F2582454AE7D000AA1B0 /* TDD-Swift.app */,
 				3174F26E2454AE85000AA1B0 /* TDD-SwiftTests.xctest */,
+				313524FA2469D66D00BC6441 /* LiveTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -162,6 +193,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		313524F92469D66D00BC6441 /* LiveTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 313525032469D66D00BC6441 /* Build configuration list for PBXNativeTarget "LiveTests" */;
+			buildPhases = (
+				313524F62469D66D00BC6441 /* Sources */,
+				313524F72469D66D00BC6441 /* Frameworks */,
+				313524F82469D66D00BC6441 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				313525002469D66D00BC6441 /* PBXTargetDependency */,
+			);
+			name = LiveTests;
+			productName = LiveTests;
+			productReference = 313524FA2469D66D00BC6441 /* LiveTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		3174F2572454AE7D000AA1B0 /* TDD-Swift */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3174F2772454AE85000AA1B0 /* Build configuration list for PBXNativeTarget "TDD-Swift" */;
@@ -177,6 +226,7 @@
 			name = "TDD-Swift";
 			packageProductDependencies = (
 				3127DD72245781C7009551D8 /* IsValid */,
+				313525052469E7E100BC6441 /* scrap-data-models */,
 			);
 			productName = "TDD-Swift";
 			productReference = 3174F2582454AE7D000AA1B0 /* TDD-Swift.app */;
@@ -210,6 +260,10 @@
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = Mannberg;
 				TargetAttributes = {
+					313524F92469D66D00BC6441 = {
+						CreatedOnToolsVersion = 11.4.1;
+						TestTargetID = 3174F2572454AE7D000AA1B0;
+					};
 					3174F2572454AE7D000AA1B0 = {
 						CreatedOnToolsVersion = 11.4.1;
 					};
@@ -230,6 +284,7 @@
 			mainGroup = 3174F24F2454AE7D000AA1B0;
 			packageReferences = (
 				3127DD71245781C7009551D8 /* XCRemoteSwiftPackageReference "IsValid" */,
+				313525042469E7E100BC6441 /* XCRemoteSwiftPackageReference "scrap-data-models" */,
 			);
 			productRefGroup = 3174F2592454AE7D000AA1B0 /* Products */;
 			projectDirPath = "";
@@ -237,11 +292,19 @@
 			targets = (
 				3174F2572454AE7D000AA1B0 /* TDD-Swift */,
 				3174F26D2454AE85000AA1B0 /* TDD-SwiftTests */,
+				313524F92469D66D00BC6441 /* LiveTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		313524F82469D66D00BC6441 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3174F2562454AE7D000AA1B0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -262,6 +325,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		313524F62469D66D00BC6441 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				313524FD2469D66D00BC6441 /* LiveTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3174F2542454AE7D000AA1B0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -289,6 +360,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		313525002469D66D00BC6441 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3174F2572454AE7D000AA1B0 /* TDD-Swift */;
+			targetProxy = 313524FF2469D66D00BC6441 /* PBXContainerItemProxy */;
+		};
 		3174F2702454AE85000AA1B0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3174F2572454AE7D000AA1B0 /* TDD-Swift */;
@@ -308,6 +384,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		313525012469D66D00BC6441 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LiveTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = se.mannberg.LiveTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TDD-Swift.app/TDD-Swift";
+			};
+			name = Debug;
+		};
+		313525022469D66D00BC6441 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LiveTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = se.mannberg.LiveTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TDD-Swift.app/TDD-Swift";
+			};
+			name = Release;
+		};
 		3174F2752454AE85000AA1B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -505,6 +619,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		313525032469D66D00BC6441 /* Build configuration list for PBXNativeTarget "LiveTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				313525012469D66D00BC6441 /* Debug */,
+				313525022469D66D00BC6441 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3174F2532454AE7D000AA1B0 /* Build configuration list for PBXProject "TDD-Swift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -543,6 +666,14 @@
 				minimumVersion = 1.0.2;
 			};
 		};
+		313525042469E7E100BC6441 /* XCRemoteSwiftPackageReference "scrap-data-models" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mannberg/scrap-data-models";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -550,6 +681,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3127DD71245781C7009551D8 /* XCRemoteSwiftPackageReference "IsValid" */;
 			productName = IsValid;
+		};
+		313525052469E7E100BC6441 /* scrap-data-models */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 313525042469E7E100BC6441 /* XCRemoteSwiftPackageReference "scrap-data-models" */;
+			productName = "scrap-data-models";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

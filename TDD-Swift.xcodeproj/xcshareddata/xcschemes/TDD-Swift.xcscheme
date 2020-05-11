@@ -40,6 +40,16 @@
                ReferencedContainer = "container:TDD-Swift.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "313524F92469D66D00BC6441"
+               BuildableName = "LiveTests.xctest"
+               BlueprintName = "LiveTests"
+               ReferencedContainer = "container:TDD-Swift.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
