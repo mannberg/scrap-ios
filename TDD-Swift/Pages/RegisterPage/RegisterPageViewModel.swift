@@ -8,6 +8,7 @@
 
 import Foundation
 import IsValid
+import scrap_data_models
 
 class RegisterPageViewModel: ObservableObject, ViewModel {
     func input(_ action: RegisterPageViewModel.Action) {
@@ -20,17 +21,45 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
             displayName = value
         case .setConfirmedPassword(let value):
             confirmedPassword = value
+        case .tapRegisterButton(let request):
+            guard registerButtonEnabled else {
+                return
+            }
+            
+            hasOngoingRequest = true
+            
+            request(userToRegister) { [weak self] result in
+                switch result {
+                case .failure(let error):
+                    if case .server(let e) = error, let unwrappedError = e {
+                        self?.errorMessage = unwrappedError.reason
+                    }
+                    self?.hasOngoingRequest = false
+                default:
+                    self?.hasOngoingRequest = false
+                }
+            }
         }
     }
     
+    //Output
     @Published private(set) var email: String = ""
     @Published private(set) var password: String = ""
     @Published private(set) var confirmedPassword: String = ""
     @Published private(set) var displayName: String = ""
+    @Published private(set) var errorMessage: String?
+    var isShowingLoadingSpinner: Bool { hasOngoingRequest }
+    private(set) var hasOngoingRequest = false
     
-    //Output
     var registerButtonEnabled: Bool {
-        false
+        if hasOngoingRequest {
+            return false
+        }
+        
+        return isValidDisplayName
+        && isValidEmail
+        && isValidPassword
+        && isValidConfirmedPassword
     }
     
     var isValidEmail: Bool {
@@ -48,6 +77,14 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
     var isValidDisplayName: Bool {
         IsValid.displayName(self.displayName)
     }
+    
+    private var userToRegister: RegisterUser {
+        RegisterUser(
+            displayName: displayName,
+            email: email,
+            password: password
+        )
+    }
 }
 
 extension RegisterPageViewModel {
@@ -56,5 +93,6 @@ extension RegisterPageViewModel {
         case setConfirmedPassword(_ value: String)
         case setPassword(_ value: String)
         case setDisplayName(_ value: String)
+        case tapRegisterButton(request: RegisterRequest = Current.api.register)
     }
 }

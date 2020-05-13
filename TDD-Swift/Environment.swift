@@ -12,10 +12,32 @@ import scrap_data_models
 typealias RequestCallback<Value> = (Result<Value, API.Error>) -> Void
 typealias Request<Value> = (@escaping RequestCallback<Value>) -> Void
 
-var Current = Environment()
+typealias RegisterRequest = (RegisterUser, @escaping RequestCallback<String>) -> Void
+typealias LoginRequest = Request<String>
+
+var Current: Environment = .live
 
 struct Environment {
-    var api = API()
+    var api: API
+}
+
+extension Environment {
+    static var live: Environment {
+        Environment(api: API())
+    }
+    
+    static var mock: Environment {
+        Environment(api: .mock)
+    }
+}
+
+extension API {
+    static var mock: API {
+        API(
+            login: { _ in },
+            register: { _, _ in }
+        )
+    }
 }
 
 struct API {
@@ -23,16 +45,7 @@ struct API {
 
     }
     
-    var register: Request<String> = { callback in
-        struct TestBody: Encodable {
-            let id: String
-        }
-        
-        let user = RegisterUser(
-            displayName: "Joe",
-            email: "joe@south.com",
-            password: "abcd1234"
-        )
+    var register: RegisterRequest = { user, callback in
         let url = URL(string: "http://localhost:8080/register")
         let data = try? JSONEncoder().encode(user)
         
@@ -50,17 +63,21 @@ struct API {
                 let response = response as? HTTPURLResponse,
                 error == nil
             else {
+                callback(.failure(.connection))
                 return
             }
 
             guard (200 ... 299) ~= response.statusCode else {
-                callback(.failure(.server))
+                let error = try? JSONDecoder().decode(ServerError.self, from: data)
+                callback(.failure(.server(message: error)))
                 return
             }
 
-            let responseString = String(data: data, encoding: .utf8)
-            
-            callback(.success(responseString!))
+            guard let responseString = String(data: data, encoding: .utf8) else {
+                //How to handle this? Corrupt data...
+                return
+            }
+            callback(.success(responseString))
         }
 
         task.resume()
@@ -69,6 +86,11 @@ struct API {
 
 extension API {
     enum Error: Swift.Error {
-        case server
+        case connection
+        case server(message: ServerError? = nil)
     }
+}
+
+struct ServerError: Decodable {
+    let reason: String
 }

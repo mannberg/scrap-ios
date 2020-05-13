@@ -63,7 +63,7 @@ class LoginPageViewModel: ObservableObject, ViewModel {
 
 extension LoginPageViewModel {
     enum Action {
-        case tapLoginButton(request: Request<String> = Current.api.login)
+        case tapLoginButton(request: LoginRequest = Current.api.login)
         case tapRegisterButton
         case dismissRegisterPage
         case setEmailAdress(_ value: String)

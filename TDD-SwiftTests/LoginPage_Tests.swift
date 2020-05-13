@@ -14,7 +14,7 @@ class LoginPage_Tests: XCTestCase {
     
     override func setUpWithError() throws {
         viewModel = LoginPageViewModel()
-        Current = Environment()
+        Current = .mock
     }
 
     override func tearDownWithError() throws {
@@ -61,7 +61,7 @@ class LoginPage_Tests: XCTestCase {
         
         viewModel.input(.tapLoginButton() { callback in
             XCTAssertTrue(self.viewModel.isShowingLoadingSpinner)
-            callback(.failure(.server))
+            callback(.failure(.server()))
             XCTAssertFalse(self.viewModel.isShowingLoadingSpinner)
         })
     }
@@ -71,7 +71,7 @@ class LoginPage_Tests: XCTestCase {
         
         viewModel.input(.tapLoginButton() { callback in
             XCTAssertFalse(self.viewModel.registerButtonEnabled)
-            callback(.failure(.server))
+            callback(.failure(.server()))
             XCTAssertTrue(self.viewModel.registerButtonEnabled)
         })
     }
@@ -101,7 +101,7 @@ class LoginPage_Tests: XCTestCase {
         let referenceViewModel = LoginPageViewModel.withCorrectCredentials
         
         viewModel.input(.tapLoginButton() { callback in
-            callback(.failure(.server))
+            callback(.failure(.server()))
             
             XCTAssertTrue(
                 self.viewModel.email == referenceViewModel.email &&

@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import scrap_data_models
 @testable import TDD_Swift
 
 class LiveTests: XCTestCase {
@@ -19,11 +20,17 @@ class LiveTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testRegisterRequest() {
+    func testRegisterRequest_expectSuccess() {
         let e = expectation(description: "")
         var result: Result<String, API.Error>!
         
-        Current.api.register { r in
+        let user = RegisterUser(
+            displayName: "Joe",
+            email: "joe@south.com",
+            password: "abcd1234"
+        )
+        
+        Current.api.register(user) { r in
             result = r
             e.fulfill()
         }
@@ -32,6 +39,31 @@ class LiveTests: XCTestCase {
         
         if case .failure(_) = result {
             XCTFail()
+        }
+    }
+    
+    func testRegisterRequest_expectFailure() {
+        let e = expectation(description: "")
+        var result: Result<String, API.Error>!
+        
+        let user = RegisterUser(
+            displayName: "Joe",
+            email: "joe@south.com",
+            password: ""
+        )
+        
+        Current.api.register(user) { r in
+            result = r
+            e.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+        
+        if
+            case .failure(let error) = result,
+            case .server(let message) = error
+        {
+            print(message?.reason)
         }
     }
 }
