@@ -96,3 +96,29 @@ extension RegisterPageViewModel {
         case tapRegisterButton(request: RegisterRequest = Current.api.register)
     }
 }
+
+extension RegisterPageViewModel {
+    func input(_ actions: Action...) -> RegisterPageViewModel {
+        for action in actions {
+            self.input(action)
+        }
+        
+        return self
+    }
+    
+    static var withCorrectCredentials: RegisterPageViewModel {
+        RegisterPageViewModel()
+            .input(
+                .setEmailAdress(.validEmail),
+                .setPassword(.validPassword),
+                .setConfirmedPassword(.validPassword),
+                .setDisplayName(.validDisplayName)
+        )
+    }
+}
+
+extension String {
+    static var validPassword: String { "abcd1234" }
+    static var validEmail: String { "joe@south.com" }
+    static var validDisplayName: String { "joe" }
+}

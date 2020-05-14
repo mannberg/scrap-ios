@@ -235,14 +235,6 @@ class RegisterPage_Tests: XCTestCase {
 }
 
 extension RegisterPageViewModel {
-    func input(_ actions: Action...) -> RegisterPageViewModel {
-        for action in actions {
-            self.input(action)
-        }
-        
-        return self
-    }
-    
     @discardableResult
     func thenAssertFalse(_ keyPath: KeyPath<RegisterPageViewModel, Bool>) -> Self {
         XCTAssertFalse(self[keyPath: keyPath])
@@ -259,23 +251,5 @@ extension RegisterPageViewModel {
     func thenAssertTrue(_ predicate: @autoclosure () -> Bool) -> Self {
         XCTAssertTrue(predicate())
         return self
-    }
-}
-
-fileprivate extension String {
-    static var validPassword: String { "abcd1234" }
-    static var validEmail: String { "joe@south.com" }
-    static var validDisplayName: String { "joe" }
-}
-
-fileprivate extension RegisterPageViewModel {
-    static var withCorrectCredentials: RegisterPageViewModel {
-        RegisterPageViewModel()
-            .input(
-                .setEmailAdress(.validEmail),
-                .setPassword(.validPassword),
-                .setConfirmedPassword(.validPassword),
-                .setDisplayName(.validDisplayName)
-        )
     }
 }
