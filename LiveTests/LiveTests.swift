@@ -8,7 +8,7 @@
 
 import XCTest
 import scrap_data_models
-@testable import TDD_Swift
+@testable import Scrap
 
 class LiveTests: XCTestCase {
 

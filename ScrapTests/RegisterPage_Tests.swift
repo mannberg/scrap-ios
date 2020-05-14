@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import TDD_Swift
+@testable import Scrap
 
 class RegisterPage_Tests: XCTestCase {
     var viewModel: RegisterPageViewModel!

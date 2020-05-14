@@ -52,7 +52,7 @@
 		313524FC2469D66D00BC6441 /* LiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTests.swift; sourceTree = "<group>"; };
 		313524FE2469D66D00BC6441 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		31352507246D626B00BC6441 /* RegisterPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPage.swift; sourceTree = "<group>"; };
-		3174F2582454AE7D000AA1B0 /* TDD-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TDD-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3174F2582454AE7D000AA1B0 /* Scrap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3174F25B2454AE7D000AA1B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3174F25D2454AE7D000AA1B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3174F25F2454AE7D000AA1B0 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
@@ -60,7 +60,7 @@
 		3174F2642454AE85000AA1B0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3174F2672454AE85000AA1B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3174F2692454AE85000AA1B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3174F26E2454AE85000AA1B0 /* TDD-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TDD-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3174F26E2454AE85000AA1B0 /* ScrapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3174F2722454AE85000AA1B0 /* LoginPage_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage_Tests.swift; sourceTree = "<group>"; };
 		3174F2742454AE85000AA1B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewModel.swift; sourceTree = "<group>"; };
@@ -141,8 +141,8 @@
 		3174F24F2454AE7D000AA1B0 = {
 			isa = PBXGroup;
 			children = (
-				3174F25A2454AE7D000AA1B0 /* TDD-Swift */,
-				3174F2712454AE85000AA1B0 /* TDD-SwiftTests */,
+				3174F25A2454AE7D000AA1B0 /* Sources */,
+				3174F2712454AE85000AA1B0 /* ScrapTests */,
 				313524FB2469D66D00BC6441 /* LiveTests */,
 				3174F2592454AE7D000AA1B0 /* Products */,
 			);
@@ -151,14 +151,14 @@
 		3174F2592454AE7D000AA1B0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3174F2582454AE7D000AA1B0 /* TDD-Swift.app */,
-				3174F26E2454AE85000AA1B0 /* TDD-SwiftTests.xctest */,
+				3174F2582454AE7D000AA1B0 /* Scrap.app */,
+				3174F26E2454AE85000AA1B0 /* ScrapTests.xctest */,
 				313524FA2469D66D00BC6441 /* LiveTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3174F25A2454AE7D000AA1B0 /* TDD-Swift */ = {
+		3174F25A2454AE7D000AA1B0 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				3127DD6A24562A03009551D8 /* Pages */,
@@ -172,7 +172,7 @@
 				3174F27F245606A1000AA1B0 /* Environment.swift */,
 				3127DD6824561C91009551D8 /* ViewModel.swift */,
 			);
-			path = "TDD-Swift";
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		3174F2632454AE85000AA1B0 /* Preview Content */ = {
@@ -183,14 +183,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		3174F2712454AE85000AA1B0 /* TDD-SwiftTests */ = {
+		3174F2712454AE85000AA1B0 /* ScrapTests */ = {
 			isa = PBXGroup;
 			children = (
 				3174F2722454AE85000AA1B0 /* LoginPage_Tests.swift */,
 				3174F2742454AE85000AA1B0 /* Info.plist */,
 				3127DD6C245778DF009551D8 /* RegisterPage_Tests.swift */,
 			);
-			path = "TDD-SwiftTests";
+			path = ScrapTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,9 +214,9 @@
 			productReference = 313524FA2469D66D00BC6441 /* LiveTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		3174F2572454AE7D000AA1B0 /* TDD-Swift */ = {
+		3174F2572454AE7D000AA1B0 /* Scrap */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3174F2772454AE85000AA1B0 /* Build configuration list for PBXNativeTarget "TDD-Swift" */;
+			buildConfigurationList = 3174F2772454AE85000AA1B0 /* Build configuration list for PBXNativeTarget "Scrap" */;
 			buildPhases = (
 				3174F2542454AE7D000AA1B0 /* Sources */,
 				3174F2552454AE7D000AA1B0 /* Frameworks */,
@@ -226,18 +226,18 @@
 			);
 			dependencies = (
 			);
-			name = "TDD-Swift";
+			name = Scrap;
 			packageProductDependencies = (
 				3127DD72245781C7009551D8 /* IsValid */,
 				313525052469E7E100BC6441 /* scrap-data-models */,
 			);
 			productName = "TDD-Swift";
-			productReference = 3174F2582454AE7D000AA1B0 /* TDD-Swift.app */;
+			productReference = 3174F2582454AE7D000AA1B0 /* Scrap.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3174F26D2454AE85000AA1B0 /* TDD-SwiftTests */ = {
+		3174F26D2454AE85000AA1B0 /* ScrapTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3174F27A2454AE85000AA1B0 /* Build configuration list for PBXNativeTarget "TDD-SwiftTests" */;
+			buildConfigurationList = 3174F27A2454AE85000AA1B0 /* Build configuration list for PBXNativeTarget "ScrapTests" */;
 			buildPhases = (
 				3174F26A2454AE85000AA1B0 /* Sources */,
 				3174F26B2454AE85000AA1B0 /* Frameworks */,
@@ -248,9 +248,9 @@
 			dependencies = (
 				3174F2702454AE85000AA1B0 /* PBXTargetDependency */,
 			);
-			name = "TDD-SwiftTests";
+			name = ScrapTests;
 			productName = "TDD-SwiftTests";
-			productReference = 3174F26E2454AE85000AA1B0 /* TDD-SwiftTests.xctest */;
+			productReference = 3174F26E2454AE85000AA1B0 /* ScrapTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -276,7 +276,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3174F2532454AE7D000AA1B0 /* Build configuration list for PBXProject "TDD-Swift" */;
+			buildConfigurationList = 3174F2532454AE7D000AA1B0 /* Build configuration list for PBXProject "Scrap" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -293,8 +293,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3174F2572454AE7D000AA1B0 /* TDD-Swift */,
-				3174F26D2454AE85000AA1B0 /* TDD-SwiftTests */,
+				3174F2572454AE7D000AA1B0 /* Scrap */,
+				3174F26D2454AE85000AA1B0 /* ScrapTests */,
 				313524F92469D66D00BC6441 /* LiveTests */,
 			);
 		};
@@ -366,12 +366,12 @@
 /* Begin PBXTargetDependency section */
 		313525002469D66D00BC6441 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3174F2572454AE7D000AA1B0 /* TDD-Swift */;
+			target = 3174F2572454AE7D000AA1B0 /* Scrap */;
 			targetProxy = 313524FF2469D66D00BC6441 /* PBXContainerItemProxy */;
 		};
 		3174F2702454AE85000AA1B0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3174F2572454AE7D000AA1B0 /* TDD-Swift */;
+			target = 3174F2572454AE7D000AA1B0 /* Scrap */;
 			targetProxy = 3174F26F2454AE85000AA1B0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -403,7 +403,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TDD-Swift.app/TDD-Swift";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Scrap.app/Scrap";
 			};
 			name = Debug;
 		};
@@ -422,7 +422,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TDD-Swift.app/TDD-Swift";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Scrap.app/Scrap";
 			};
 			name = Release;
 		};
@@ -545,9 +545,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"TDD-Swift/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Sources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "TDD-Swift/Info.plist";
+				INFOPLIST_FILE = Sources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -564,9 +564,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"TDD-Swift/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Sources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = "TDD-Swift/Info.plist";
+				INFOPLIST_FILE = Sources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -584,7 +584,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "TDD-SwiftTests/Info.plist";
+				INFOPLIST_FILE = ScrapTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -595,7 +595,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TDD-Swift.app/TDD-Swift";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Scrap.app/Scrap";
 			};
 			name = Debug;
 		};
@@ -605,7 +605,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "TDD-SwiftTests/Info.plist";
+				INFOPLIST_FILE = ScrapTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -616,7 +616,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TDD-Swift.app/TDD-Swift";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Scrap.app/Scrap";
 			};
 			name = Release;
 		};
@@ -632,7 +632,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3174F2532454AE7D000AA1B0 /* Build configuration list for PBXProject "TDD-Swift" */ = {
+		3174F2532454AE7D000AA1B0 /* Build configuration list for PBXProject "Scrap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3174F2752454AE85000AA1B0 /* Debug */,
@@ -641,7 +641,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3174F2772454AE85000AA1B0 /* Build configuration list for PBXNativeTarget "TDD-Swift" */ = {
+		3174F2772454AE85000AA1B0 /* Build configuration list for PBXNativeTarget "Scrap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3174F2782454AE85000AA1B0 /* Debug */,
@@ -650,7 +650,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3174F27A2454AE85000AA1B0 /* Build configuration list for PBXNativeTarget "TDD-SwiftTests" */ = {
+		3174F27A2454AE85000AA1B0 /* Build configuration list for PBXNativeTarget "ScrapTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3174F27B2454AE85000AA1B0 /* Debug */,

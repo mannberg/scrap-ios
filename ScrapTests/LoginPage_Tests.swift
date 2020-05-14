@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import TDD_Swift
+@testable import Scrap
 
 class LoginPage_Tests: XCTestCase {
     var viewModel: LoginPageViewModel!

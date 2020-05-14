@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3174F2572454AE7D000AA1B0"
-               BuildableName = "TDD-Swift.app"
-               BlueprintName = "TDD-Swift"
-               ReferencedContainer = "container:TDD-Swift.xcodeproj">
+               BuildableName = "Scrap.app"
+               BlueprintName = "Scrap"
+               ReferencedContainer = "container:Scrap.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,9 +35,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3174F26D2454AE85000AA1B0"
-               BuildableName = "TDD-SwiftTests.xctest"
-               BlueprintName = "TDD-SwiftTests"
-               ReferencedContainer = "container:TDD-Swift.xcodeproj">
+               BuildableName = "ScrapTests.xctest"
+               BlueprintName = "ScrapTests"
+               ReferencedContainer = "container:Scrap.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -47,7 +47,7 @@
                BlueprintIdentifier = "313524F92469D66D00BC6441"
                BuildableName = "LiveTests.xctest"
                BlueprintName = "LiveTests"
-               ReferencedContainer = "container:TDD-Swift.xcodeproj">
+               ReferencedContainer = "container:Scrap.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -67,9 +67,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3174F2572454AE7D000AA1B0"
-            BuildableName = "TDD-Swift.app"
-            BlueprintName = "TDD-Swift"
-            ReferencedContainer = "container:TDD-Swift.xcodeproj">
+            BuildableName = "Scrap.app"
+            BlueprintName = "Scrap"
+            ReferencedContainer = "container:Scrap.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -84,9 +84,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3174F2572454AE7D000AA1B0"
-            BuildableName = "TDD-Swift.app"
-            BlueprintName = "TDD-Swift"
-            ReferencedContainer = "container:TDD-Swift.xcodeproj">
+            BuildableName = "Scrap.app"
+            BlueprintName = "Scrap"
+            ReferencedContainer = "container:Scrap.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
