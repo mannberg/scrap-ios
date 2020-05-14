@@ -142,7 +142,7 @@ class RegisterPage_Tests: XCTestCase {
             callback(
                 .failure(
                     .server(
-                        message: ServerError(reason: errorMessage)
+                        message: errorMessage
                     )
                 )
             )
@@ -162,7 +162,7 @@ class RegisterPage_Tests: XCTestCase {
             callback(
                 .failure(
                     .server(
-                        message: ServerError(reason: "")
+                        message: ""
                     )
                 )
             )

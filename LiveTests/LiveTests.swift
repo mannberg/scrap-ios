@@ -63,7 +63,7 @@ class LiveTests: XCTestCase {
             case .failure(let error) = result,
             case .server(let message) = error
         {
-            print(message?.reason)
+            print(message)
         }
     }
 }

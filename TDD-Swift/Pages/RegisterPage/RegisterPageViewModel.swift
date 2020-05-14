@@ -31,8 +31,8 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
             request(userToRegister) { [weak self] result in
                 switch result {
                 case .failure(let error):
-                    if case .server(let e) = error, let unwrappedError = e {
-                        self?.errorMessage = unwrappedError.reason
+                    if case .server(let errorMessage) = error {
+                        self?.errorMessage = errorMessage
                     }
                     self?.hasOngoingRequest = false
                 default:

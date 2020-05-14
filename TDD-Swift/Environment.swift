@@ -69,7 +69,7 @@ struct API {
 
             guard (200 ... 299) ~= response.statusCode else {
                 let error = try? JSONDecoder().decode(ServerError.self, from: data)
-                callback(.failure(.server(message: error)))
+                callback(.failure(.server(message: error?.reason)))
                 return
             }
 
@@ -87,7 +87,7 @@ struct API {
 extension API {
     enum Error: Swift.Error {
         case connection
-        case server(message: ServerError? = nil)
+        case server(message: String? = nil)
     }
 }
 
