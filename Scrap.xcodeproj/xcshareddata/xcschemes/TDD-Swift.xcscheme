@@ -49,6 +49,11 @@
                BlueprintName = "LiveTests"
                ReferencedContainer = "container:Scrap.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "LiveTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

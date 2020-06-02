@@ -12,7 +12,7 @@ import scrap_data_models
 typealias RequestCallback<Value> = (Result<Value, API.Error>) -> Void
 typealias Request<Value> = (@escaping RequestCallback<Value>) -> Void
 
-typealias RegisterRequest = (RegisterUser, @escaping RequestCallback<String>) -> Void
+typealias RegisterRequest = (UserRegistrationCandidate, @escaping RequestCallback<String>) -> Void
 typealias LoginRequest = Request<String>
 
 var Current: Environment = .live

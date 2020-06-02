@@ -78,8 +78,8 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
         IsValid.displayName(self.displayName)
     }
     
-    private var userToRegister: RegisterUser {
-        RegisterUser(
+    private var userToRegister: UserRegistrationCandidate {
+        .init(
             displayName: displayName,
             email: email,
             password: password

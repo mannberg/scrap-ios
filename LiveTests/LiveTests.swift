@@ -24,7 +24,7 @@ class LiveTests: XCTestCase {
         let e = expectation(description: "")
         var result: Result<String, API.Error>!
         
-        let user = RegisterUser(
+        let user = UserRegistrationCandidate(
             displayName: "Joe",
             email: "joe@south.com",
             password: "abcd1234"
@@ -46,7 +46,7 @@ class LiveTests: XCTestCase {
         let e = expectation(description: "")
         var result: Result<String, API.Error>!
         
-        let user = RegisterUser(
+        let user = UserRegistrationCandidate(
             displayName: "Joe",
             email: "joe@south.com",
             password: ""
