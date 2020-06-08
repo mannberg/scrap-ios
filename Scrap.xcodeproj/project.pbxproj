@@ -24,6 +24,7 @@
 		3174F2732454AE85000AA1B0 /* LoginPage_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F2722454AE85000AA1B0 /* LoginPage_Tests.swift */; };
 		3174F27E2454AFD8000AA1B0 /* LoginPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */; };
 		3174F280245606A1000AA1B0 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F27F245606A1000AA1B0 /* Environment.swift */; };
+		31ABAE75248D709F00CA463B /* UserLoginCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31ABAE74248D709F00CA463B /* UserLoginCandidate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		3174F2742454AE85000AA1B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewModel.swift; sourceTree = "<group>"; };
 		3174F27F245606A1000AA1B0 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		31ABAE74248D709F00CA463B /* UserLoginCandidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserLoginCandidate.swift; path = Models/UserLoginCandidate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 				3174F2632454AE85000AA1B0 /* Preview Content */,
 				3174F27F245606A1000AA1B0 /* Environment.swift */,
 				3127DD6824561C91009551D8 /* ViewModel.swift */,
+				31ABAE74248D709F00CA463B /* UserLoginCandidate.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				3127DD6724561990009551D8 /* Input.swift in Sources */,
 				3174F25C2454AE7D000AA1B0 /* AppDelegate.swift in Sources */,
 				3174F27E2454AFD8000AA1B0 /* LoginPageViewModel.swift in Sources */,
+				31ABAE75248D709F00CA463B /* UserLoginCandidate.swift in Sources */,
 				3174F25E2454AE7D000AA1B0 /* SceneDelegate.swift in Sources */,
 				3127DD702457791A009551D8 /* RegisterPageViewModel.swift in Sources */,
 				3174F2602454AE7D000AA1B0 /* LoginPage.swift in Sources */,

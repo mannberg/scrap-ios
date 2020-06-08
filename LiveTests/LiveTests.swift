@@ -22,7 +22,7 @@ class LiveTests: XCTestCase {
 
     func testRegisterRequest_expectSuccess() {
         let e = expectation(description: "")
-        var result: Result<String, API.Error>!
+        var result: Result<Token, API.Error>!
         
         let user = UserRegistrationCandidate(
             displayName: "Joe",
@@ -37,14 +37,19 @@ class LiveTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
         
-        if case .failure(_) = result {
-            XCTFail()
-        }
+//        if case .failure(_) = result {
+//            XCTFail()
+//        }
+        
+//        guard case .failure(let error) = result else {
+//            XCTFail()
+//            return
+//        }
     }
     
-    func testRegisterRequest_expectFailure() {
+    func testRegisterRequest_expectFailureDueToFaultyCredentials() {
         let e = expectation(description: "")
-        var result: Result<String, API.Error>!
+        var result: Result<Token, API.Error>!
         
         let user = UserRegistrationCandidate(
             displayName: "Joe",
@@ -59,11 +64,50 @@ class LiveTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
         
-        if
-            case .failure(let error) = result,
-            case .server(let message) = error
-        {
-            print(message)
+        guard case .failure(let error) = result else {
+            XCTFail()
+            return
+        }
+        
+        print("")
+    }
+    
+    func testLoginRequest_expectSuccess() {
+        let e = expectation(description: "")
+        var result: Result<Token, API.Error>!
+        
+        let user = UserLoginCandidate(
+            email: "joe@south.com",
+            password: "abcd1234"
+        )
+        
+        Current.api.login(user) { r in
+            result = r
+            e.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+        
+        if case .failure(let error) = result {
+            //TODO: Fix error messages that suck!
+            XCTFail()
+        }
+    }
+    
+    func testMeRequest_expectSuccess() {
+        let e = expectation(description: "")
+        var result: Result<String, API.Error>!
+        
+        Current.api.test { r in
+            result = r
+            e.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+        
+        if case .failure(let error) = result {
+            //TODO: Fix error messages that suck!
+            XCTFail()
         }
     }
 }

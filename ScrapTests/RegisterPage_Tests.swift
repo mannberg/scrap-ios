@@ -116,6 +116,8 @@ class RegisterPage_Tests: XCTestCase {
             .thenAssertTrue(\.registerButtonEnabled)
             .input(.setDisplayName(""))
             .thenAssertFalse(\.registerButtonEnabled)
+            .input(.setDisplayName("Anders"))
+            .thenAssertTrue(\.registerButtonEnabled)
     }
         
     func test_tapping_register_button_should_show_spinner() {
@@ -193,7 +195,7 @@ class RegisterPage_Tests: XCTestCase {
     func test_spinner_is_hidden_on_server_success() {
         Current.api.register = { _, callback in
             callback(
-                .success("")
+                .success(Token(value: ""))
             )
         }
         RegisterPageViewModel

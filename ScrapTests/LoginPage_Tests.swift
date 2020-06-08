@@ -59,7 +59,7 @@ class LoginPage_Tests: XCTestCase {
     func test_hide_spinner_on_error() {
         viewModel = .withCorrectCredentials
         
-        viewModel.input(.tapLoginButton() { callback in
+        viewModel.input(.tapLoginButton() { _, callback in
             XCTAssertTrue(self.viewModel.isShowingLoadingSpinner)
             callback(.failure(.server()))
             XCTAssertFalse(self.viewModel.isShowingLoadingSpinner)
@@ -69,7 +69,7 @@ class LoginPage_Tests: XCTestCase {
     func test_enable_register_button_on_login_error() {
         viewModel = .withCorrectCredentials
         
-        viewModel.input(.tapLoginButton() { callback in
+        viewModel.input(.tapLoginButton() { _, callback in
             XCTAssertFalse(self.viewModel.registerButtonEnabled)
             callback(.failure(.server()))
             XCTAssertTrue(self.viewModel.registerButtonEnabled)
@@ -79,9 +79,9 @@ class LoginPage_Tests: XCTestCase {
     func test_enable_register_button_on_login_success() {
         viewModel = .withCorrectCredentials
         
-        viewModel.input(.tapLoginButton() { callback in
+        viewModel.input(.tapLoginButton() { _, callback in
             XCTAssertFalse(self.viewModel.registerButtonEnabled)
-            callback(.success(""))
+            callback(.success(Token(value: "")))
             XCTAssertTrue(self.viewModel.registerButtonEnabled)
         })
     }
@@ -89,9 +89,9 @@ class LoginPage_Tests: XCTestCase {
     func test_hide_spinner_on_success() {
         viewModel = .withCorrectCredentials
         
-        viewModel.input(.tapLoginButton() { callback in
+        viewModel.input(.tapLoginButton() { _, callback in
             XCTAssertTrue(self.viewModel.isShowingLoadingSpinner)
-            callback(.success(""))
+            callback(.success(Token(value: "")))
             XCTAssertFalse(self.viewModel.isShowingLoadingSpinner)
         })
     }
@@ -100,7 +100,7 @@ class LoginPage_Tests: XCTestCase {
         viewModel = .withCorrectCredentials
         let referenceViewModel = LoginPageViewModel.withCorrectCredentials
         
-        viewModel.input(.tapLoginButton() { callback in
+        viewModel.input(.tapLoginButton() { _, callback in
             callback(.failure(.server()))
             
             XCTAssertTrue(

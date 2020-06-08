@@ -20,7 +20,9 @@ class LoginPageViewModel: ObservableObject, ViewModel {
             isShowingLoadingSpinner = true
             registerButtonEnabled = false
             
-            request { [weak self] result in
+            let dummy = UserLoginCandidate(email: "", password: "")
+            
+            request(dummy) { [weak self] result in
                 switch result {
                 case .failure(_):
                     self?.isShowingLoadingSpinner = false
