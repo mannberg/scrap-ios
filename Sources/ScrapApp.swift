@@ -6,4 +6,13 @@
 //  Copyright © 2020 Mannberg. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
+
+@main
+struct ScrapApp: App {
+    var body: some Scene {
+        WindowGroup {
+            RegisterPage()
+        }
+    }
+}
