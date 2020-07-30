@@ -33,4 +33,13 @@ extension ViewModel {
             set: { self.input(toAction($0)) }
         )
     }
+    
+    func binding<Value>(
+        get: KeyPath<Self, Value>
+    ) -> Binding<Value> {
+        Binding(
+            get: { self[keyPath: get] },
+            set: { _ in }
+        )
+    }
 }

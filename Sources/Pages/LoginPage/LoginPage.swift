@@ -16,18 +16,22 @@ struct LoginPage: View {
         
         return VStack {
             Input(
+                title: "Email adress",
                 placeholder: "Email adress",
                 binding: self.viewModel.binding(
                     get: \.email,
                     toAction: { .setEmailAdress($0) }
-                )
+                ),
+                textContentType: .emailAddress
             )
             Input(
+                title: "Password",
                 placeholder: "Password",
                 binding: self.viewModel.binding(
                     get: \.password,
                     toAction: { .setPassword($0) }
-                )
+                ),
+                textContentType: .password
             )
 
             Button("Login") {

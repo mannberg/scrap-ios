@@ -9,8 +9,9 @@
 import XCTest
 import scrap_data_models
 @testable import Scrap
+@testable import Environment
 
-class LiveTests: XCTestCase {
+class LiveTests_Registration: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -20,6 +21,7 @@ class LiveTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    //MARK: Needs updated credentials to pass
     func testRegisterRequest_expectSuccess() {
         let e = expectation(description: "")
         var result: Result<Token, API.Error>!
@@ -37,14 +39,14 @@ class LiveTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
         
-//        if case .failure(_) = result {
-//            XCTFail()
-//        }
-        
-//        guard case .failure(let error) = result else {
-//            XCTFail()
-//            return
-//        }
+        switch result {
+        case .success(let token):
+            print("")
+        case .failure(let error):
+            XCTFail()
+        case .none:
+            print("")
+        }
     }
     
     func testRegisterRequest_expectFailureDueToFaultyCredentials() {
@@ -64,12 +66,10 @@ class LiveTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
         
-        guard case .failure(let error) = result else {
+        guard case .failure(_) = result else {
             XCTFail()
             return
         }
-        
-        print("")
     }
     
     func testLoginRequest_expectSuccess() {
@@ -81,15 +81,14 @@ class LiveTests: XCTestCase {
             password: "abcd1234"
         )
         
-        Current.api.login(user) { r in
-            result = r
+        Current.api.login(user) {
+            result = $0
             e.fulfill()
         }
         
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 2)
         
-        if case .failure(let error) = result {
-            //TODO: Fix error messages that suck!
+        if case .failure(_) = result {
             XCTFail()
         }
     }
@@ -98,6 +97,8 @@ class LiveTests: XCTestCase {
         let e = expectation(description: "")
         var result: Result<String, API.Error>!
         
+        Current.token.tokenValue = { Token(value: "utUv+Ei9+ufT8r+CheH26Q==") }
+        
         Current.api.test { r in
             result = r
             e.fulfill()
@@ -105,7 +106,7 @@ class LiveTests: XCTestCase {
         
         waitForExpectations(timeout: 1)
         
-        if case .failure(let error) = result {
+        if case .failure(_) = result {
             //TODO: Fix error messages that suck!
             XCTFail()
         }

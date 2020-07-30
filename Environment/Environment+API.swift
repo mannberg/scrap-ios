@@ -1,71 +1,47 @@
 //
-//  Environment.swift
-//  TDD-Swift
+//  Environment+API.swift
+//  Scrap
 //
-//  Created by Anders Mannberg on 2020-04-26.
+//  Created by Anders Mannberg on 2020-07-04.
 //  Copyright © 2020 Mannberg. All rights reserved.
 //
 
 import Foundation
 import scrap_data_models
 
-typealias StatusCode = Int
+public typealias StatusCode = Int
 
-typealias RequestCallback<Value> = (Result<Value, API.Error>) -> Void
-typealias Request<Value> = (@escaping RequestCallback<Value>) -> Void
+public typealias RequestCallback<Value> = (Result<Value, API.Error>) -> Void
+public typealias Request<Value> = (@escaping RequestCallback<Value>) -> Void
 
-typealias RegisterRequest = (UserRegistrationCandidate, @escaping RequestCallback<Token>) -> Void
-typealias LoginRequest = (UserLoginCandidate, @escaping RequestCallback<Token>) -> Void
+public typealias RegisterRequest = (UserRegistrationCandidate, @escaping RequestCallback<Token>) -> Void
+public typealias LoginRequest = (UserLoginCandidate, @escaping RequestCallback<Token>) -> Void
 
-var Current: Environment = .live
-
-struct Environment {
-    var api: API
-}
-
-extension Environment {
-    static var live: Environment {
-        Environment(api: API())
-    }
+public struct API {
+    //MARK: Endpoints
     
-    static var mock: Environment {
-        Environment(api: .mock)
-    }
-}
-
-extension API {
-    static var mock: API {
-        API(
-            login: { _, _ in },
-            register: { _, _ in }
-        )
-    }
-}
-
-struct API {
-    var login: LoginRequest = { user, callback in
-        var request: URLRequest = .post(.login)
-        
-        var headers = Headers.defaultHeader(forRequest: request)
-        headers["Authorization"] = "Basic \(user.basicAuthorizationFormatted)"
-        request.allHTTPHeaderFields = headers
+    public var login: LoginRequest = { user, callback in
+        let request = URLRequest
+            .post(.login)
+            .basicAuthorized(forUser: user)
         
         perform(
             request: request,
-            responseTransform: { return try? JSONDecoder().decode(Token.self, from: $0) },
-            callback: callback
+            responseTransform: { try? JSONDecoder().decode(Token.self, from: $0) },
+            callback: { result in
+                if case .success(let token) = result {
+                    _ = Current.token.saveToken(token)
+                } else {
+                    callback(result)
+                }
+            }
         )
     }
     
-    var register: RegisterRequest = { user, callback in
-        var request: URLRequest = .post(.register)
-        
-        let data = try? JSONEncoder().encode(user)
-        request.httpBody = data
-        
-        var headers = Headers.defaultHeader(forRequest: request)
-        
-        request.allHTTPHeaderFields = headers
+    public var register: RegisterRequest = { user, callback in
+        let request = URLRequest
+            .post(.register)
+            .with(data: try? JSONEncoder().encode(user))
         
         perform(
             request: request,
@@ -84,12 +60,11 @@ struct API {
         )
     }
     
-    var test: Request<String> = { callback in
-        
-        var request: URLRequest = .get(.test)
-        var headers = Headers.defaultHeader(forRequest: request)
-        headers["Authorization"] = "Bearer bhAIuuJDLOeiNuAHHhwHHA=="
-        request.allHTTPHeaderFields = headers
+    public var test: Request<String> = { callback in
+        guard let request = URLRequest.get(.test).tokenAuthorized else {
+            callback(.failure(.missingToken))
+            return
+        }
         
         perform(
             request: request,
@@ -97,6 +72,8 @@ struct API {
             callback: callback
         )
     }
+    
+    //MARK: Private
     
     private static func perform<ReturnValue>(
         request: URLRequest,
@@ -120,9 +97,10 @@ struct API {
             }
 
             guard let res = responseTransform(data) else {
-                //How to handle this? Corrupt data...
+                callback(.failure(.parse))
                 return
             }
+            
             callback(.success(res))
         }
 
@@ -130,16 +108,18 @@ struct API {
     }
 }
 
-extension API {
+public extension API {
     enum Error: Swift.Error {
         case connection
         case server(message: String? = nil)
         case visible(message: String)
         case silent
+        case missingToken
+        case parse
     }
 }
 
-struct ServerError: Decodable {
+public struct ServerError: Decodable {
     let reason: String
 }
 
@@ -156,7 +136,7 @@ extension URLRequest {
         }
         
         let url = URL(string: urlString)
-        var request = URLRequest(url: url!)
+        var request = URLRequest(url: url!).withDefaultHeaders
         request.httpMethod = "POST"
         
         return request
@@ -188,16 +168,65 @@ enum GetEndpoint {
     case test
 }
 
-struct Token: Codable {
-    let value: String
-}
-
-typealias Headers = [String: String]
-
-fileprivate extension Dictionary where Key == String, Value == String {
-    static func defaultHeader(forRequest request: URLRequest) -> [String : String] {
-        var headers = request.allHTTPHeaderFields ?? [:]
-        headers["Content-Type"] = "application/json"
-        return headers
+public struct Token: Codable, Equatable, CustomStringConvertible {
+    
+    public let value: String
+    public var description: String { value }
+    
+    public init(value: String) {
+        self.value = value
     }
 }
+
+extension API {
+    static var mock: API {
+        API(
+            login: { _, _ in },
+            register: { _, _ in }
+        )
+    }
+}
+
+extension URLRequest {
+    var tokenAuthorized: URLRequest? {
+        guard let token = Current.token.tokenValue() else {
+            return nil
+        }
+        
+        var mutableSelf = self
+        
+        var headers = mutableSelf.allHTTPHeaderFields ?? [:]
+        headers["Authorization"] = "Bearer \(token)"
+        mutableSelf.allHTTPHeaderFields = headers
+        
+        return mutableSelf
+    }
+    
+    func basicAuthorized(forUser user: UserLoginCandidate) -> URLRequest {
+        var mutableSelf = self
+        
+        var headers = mutableSelf.allHTTPHeaderFields ?? [:]
+        headers["Authorization"] = "Basic \(user.basicAuthorizationFormatted)"
+        mutableSelf.allHTTPHeaderFields = headers
+        
+        return mutableSelf
+    }
+    
+    var withDefaultHeaders: URLRequest {
+        var mutableSelf = self
+        
+        var headers = mutableSelf.allHTTPHeaderFields ?? [:]
+        headers["Content-Type"] = "application/json"
+        mutableSelf.allHTTPHeaderFields = headers
+        
+        return mutableSelf
+    }
+    
+    func with(data: Data?) -> URLRequest {
+        var mutableSelf = self
+        mutableSelf.httpBody = data
+        
+        return mutableSelf
+    }
+}
+

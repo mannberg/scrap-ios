@@ -8,6 +8,7 @@
 
 import Foundation
 import IsValid
+import Environment
 import scrap_data_models
 
 class RegisterPageViewModel: ObservableObject, ViewModel {
@@ -27,6 +28,7 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
             }
             
             hasOngoingRequest = true
+            errorMessage = nil
             
             request(userToRegister) { [weak self] result in
                 switch result {
@@ -48,7 +50,10 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
     @Published private(set) var confirmedPassword: String = ""
     @Published private(set) var displayName: String = ""
     @Published private(set) var errorMessage: String?
+    
     var isShowingLoadingSpinner: Bool { hasOngoingRequest }
+    var textFieldsAreDisabled: Bool { hasOngoingRequest }
+    
     private(set) var hasOngoingRequest = false
     
     var registerButtonEnabled: Bool {
@@ -78,6 +83,7 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
         IsValid.displayName(self.displayName)
     }
     
+    //MARK: Private
     private var userToRegister: UserRegistrationCandidate {
         .init(
             displayName: displayName,

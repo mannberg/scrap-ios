@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Scrap
+@testable import Environment
 
 class LoginPage_Tests: XCTestCase {
     var viewModel: LoginPageViewModel!

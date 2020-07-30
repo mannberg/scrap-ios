@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import Scrap
+@testable import Environment
 
 class RegisterPage_Tests: XCTestCase {
     var viewModel: RegisterPageViewModel!
@@ -67,7 +68,7 @@ class RegisterPage_Tests: XCTestCase {
             .thenAssertFalse(\.isValidConfirmedPassword)
     }
     
-    func test_confirmed_password_is_only_valid_when_equal_to_valid_password() {
+    func test_confirmed_password_is_valid_when_equal_to_valid_password() {
         let value: String = .validPassword
         viewModel
             .input(.setPassword(value))
@@ -159,6 +160,26 @@ class RegisterPage_Tests: XCTestCase {
         XCTAssertEqual(errorMessage, receivedMessage)
     }
     
+    func test_error_message_is_nil_when_register_button_is_tapped() {
+        viewModel = .withCorrectCredentials
+        let errorMessage = "Stuff went wrong, my dude!"
+        Current.api.register = { _, callback in
+            callback(
+                .failure(
+                    .server(
+                        message: errorMessage
+                    )
+                )
+            )
+        }
+        viewModel.input(.tapRegisterButton())
+        
+        Current.api.register = { _, _ in }
+        viewModel.input(.tapRegisterButton())
+        
+        XCTAssertNil(viewModel.errorMessage)
+    }
+    
     func test_spinner_is_hidden_on_server_error_with_message() {
         Current.api.register = { _, callback in
             callback(
@@ -233,6 +254,30 @@ class RegisterPage_Tests: XCTestCase {
             .withCorrectCredentials
             .input(.tapRegisterButton())
             .thenAssertTrue(\.isShowingLoadingSpinner)
+    }
+    
+    func test_textfields_are_disabled_during_request() {
+        RegisterPageViewModel
+            .withCorrectCredentials
+            .input(.tapRegisterButton())
+            .thenAssertTrue(\.textFieldsAreDisabled)
+    }
+    
+    func test_textfields_are_enabled_after_server_response() {
+        Current.api.register = { _, callback in
+            callback(
+                .failure(
+                    .server(
+                        message: nil
+                    )
+                )
+            )
+        }
+        
+        RegisterPageViewModel
+            .withCorrectCredentials
+            .input(.tapRegisterButton())
+            .thenAssertFalse(\.textFieldsAreDisabled)
     }
 }
 

@@ -9,17 +9,48 @@
 import SwiftUI
 
 struct Input: View {
+    let title: String
     let placeholder: String
     let binding: Binding<String>
+    let textContentType: UITextContentType
+    var type: TextType = .text
+//    @Binding var isEnabled: Bool
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Hej")
+            Text(title)
+                .font(.subheadline)
                 .foregroundColor(.gray)
                 .padding(.bottom, 5)
-            TextField(placeholder, text: binding)
-                .textFieldStyle(InputStyle())
+            input(forType: self.type)
+//                .disabled(!isEnabled)
+                .textContentType(textContentType)
+                .disableAutocorrection(true)
+                .font(.system(size: 16))
+            Divider()
+                .background(Color("Background"))
+                .padding(.top, 10)
         }
-        .padding([.leading, .trailing], 10)
+        .padding([.leading, .trailing], 15)
+        .padding([.bottom], 10)
+    }
+}
+
+extension Input {
+    enum TextType {
+        case text
+        case secure
+    }
+    
+    func input(forType type: TextType) -> some View {
+        Group {
+            switch type {
+            case .text:
+                TextField("", text: binding)
+            case .secure:
+                SecureField("", text: binding)
+            }
+        }
     }
 }
 
@@ -39,11 +70,14 @@ struct InputStyle: TextFieldStyle {
 struct Input_Previews: PreviewProvider {
     static var previews: some View {
         Input(
+            title: "Title",
             placeholder: "Placeholder",
             binding: Binding(
-                get: { "" },
+                get: { "Some value" },
                 set: { _ in }
-            )
+            ),
+            textContentType: .name
         )
+        
     }
 }
