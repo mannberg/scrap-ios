@@ -66,18 +66,12 @@ public struct TokenHandler {
     }
     
     public var tokenValue: () -> Token? = {
-        if let token = Current.token.cachedToken {
-            return token
-        } else if case .success(let token) = Current.token.loadToken() {
+        if case .success(let token) = Current.token.loadToken() {
             return token
         } else {
             return nil
         }
     }
-    
-    //MARK: Private
-    //TODO: Should we really be caching token???
-    private var cachedToken: Token?
 }
 
 extension TokenHandler {
