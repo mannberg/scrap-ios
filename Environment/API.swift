@@ -14,12 +14,20 @@ public typealias StatusCode = Int
 public typealias RequestCallback<Value> = (Result<Value, API.Error>) -> Void
 public typealias Request<Value> = (@escaping RequestCallback<Value>) -> Void
 
+//MARK: Request signatures
 public typealias RegisterRequest = (UserRegistrationCandidate, @escaping RequestCallback<Token>) -> Void
 public typealias LoginRequest = (UserLoginCandidate, @escaping RequestCallback<Token>) -> Void
 
+private typealias Perform<ReturnValue> = (
+    URLRequest, //request
+    (Data) -> ReturnValue?, //responseTransform
+    (Data, StatusCode) -> API.Error, //errorTransform
+    RequestCallback<ReturnValue> //callback
+)
+
 public struct API {
-    //MARK: Endpoints
     
+    //MARK: Endpoints
     public var login: LoginRequest = { user, callback in
         let request = URLRequest
             .post(.login)
@@ -31,9 +39,9 @@ public struct API {
             callback: { result in
                 if case .success(let token) = result {
                     _ = Current.token.saveToken(token)
-                } else {
-                    callback(result)
                 }
+                
+                callback(result)
             }
         )
     }
@@ -74,7 +82,6 @@ public struct API {
     }
     
     //MARK: Private
-    
     private static func perform<ReturnValue>(
         request: URLRequest,
         responseTransform: @escaping (Data) -> ReturnValue?,
@@ -168,8 +175,8 @@ enum GetEndpoint {
     case test
 }
 
+//TODO: Should this be a shared data model?
 public struct Token: Codable, Equatable, CustomStringConvertible {
-    
     public let value: String
     public var description: String { value }
     

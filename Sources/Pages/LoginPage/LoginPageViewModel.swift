@@ -11,6 +11,7 @@ import Environment
 import IsValid
 
 class LoginPageViewModel: ObservableObject, ViewModel {
+    
     func input(_ action: LoginPageViewModel.Action) {
         switch action {
         case .tapLoginButton(let request):
@@ -55,7 +56,7 @@ class LoginPageViewModel: ObservableObject, ViewModel {
         isValidEmail && isValidPassword
     }
     
-    //Private helpers
+    //MARK: Private
     private var isValidEmail: Bool {
         IsValid.email(self.email)
     }

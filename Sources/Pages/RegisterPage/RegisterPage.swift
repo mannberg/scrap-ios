@@ -17,7 +17,6 @@ struct RegisterPage: View {
         return NavigationView {
             VStack {
                 Card {
-                    
                     Input(
                         title: "Display name",
                         placeholder: "Display name",

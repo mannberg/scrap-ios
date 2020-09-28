@@ -93,11 +93,12 @@ class LiveTests_Registration: XCTestCase {
         }
     }
     
+    //MARK: Should succeed with hardcoded DB token
     func testMeRequest_expectSuccess() {
         let e = expectation(description: "")
         var result: Result<String, API.Error>!
         
-        Current.token.tokenValue = { Token(value: "utUv+Ei9+ufT8r+CheH26Q==") }
+        Current.token.tokenValue = { Token(value: "RMTZAHQn/a0U4gf/uSALLw==") }
         
         Current.api.test { r in
             result = r

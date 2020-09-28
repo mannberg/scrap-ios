@@ -9,11 +9,17 @@
 import Foundation
 import Security
 
+//TODO: TokenHandler should be an enum... Or should it...?
+//TODO: It should definitively be it's own package.
 public struct TokenHandler {
+    //TODO: Check if this is a good name...
     let tokenKey = "AuthorizationToken"
     
+    //TODO: Write test that verifies new server token is always saved when retrieved.
     public var saveToken: (Token) -> Result<Void, API.Error> = { token in
         guard let tokenData = token.value.data(using: .utf8) else {
+            //TODO: Notify server if token changes format
+            //TODO: Write test that verifies our token structure does not change.
             return .failure(.parse)
         }
         
@@ -27,6 +33,7 @@ public struct TokenHandler {
         
         let status = SecItemAdd(query as CFDictionary, nil)
         
+        //TODO: Failure should be logged to the server + the user should be notified
         return status == noErr ? .success(()) : .failure(.silent)
     }
     
@@ -69,7 +76,7 @@ public struct TokenHandler {
     }
     
     //MARK: Private
-    
+    //TODO: Should we really be caching token???
     private var cachedToken: Token?
 }
 

@@ -12,6 +12,7 @@ import Environment
 import scrap_data_models
 
 class RegisterPageViewModel: ObservableObject, ViewModel {
+    
     func input(_ action: RegisterPageViewModel.Action) {
         switch action {
         case .setEmailAdress(let value):
@@ -44,7 +45,7 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
         }
     }
     
-    //Output
+    //MARK: Output
     @Published private(set) var email: String = ""
     @Published private(set) var password: String = ""
     @Published private(set) var confirmedPassword: String = ""
@@ -123,6 +124,7 @@ extension RegisterPageViewModel {
     }
 }
 
+//MARK: Helpers
 extension String {
     static var validPassword: String { "abcd1234" }
     static var validEmail: String { "joe@south.com" }
