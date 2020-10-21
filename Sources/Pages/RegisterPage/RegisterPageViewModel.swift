@@ -9,11 +9,16 @@
 import Foundation
 import Combine
 import IsValid
-import Environment
 import scrap_data_models
 import scrap_client_api
 
 class RegisterPageViewModel: ObservableObject, ViewModel {
+    
+    init(sideEffects: SideEffects = .live) {
+        self.sideEffects = sideEffects
+    }
+    
+    var sideEffects: SideEffects
     
     func input(_ action: RegisterPageViewModel.Action) {
         switch action {
@@ -25,7 +30,7 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
             displayName = value
         case .setConfirmedPassword(let value):
             confirmedPassword = value
-        case .tapRegisterButton(let request):
+        case .tapRegisterButton:
             guard registerButtonEnabled else {
                 return
             }
@@ -33,7 +38,7 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
             hasOngoingRequest = true
             errorMessage = nil
             
-            registerRequestCancellable = request(userToRegister).sink { [weak self] completion in
+            registerRequestCancellable = sideEffects.register(userToRegister).sink { [weak self] completion in
                 
                 switch completion {
                 case .failure(let error):
@@ -108,7 +113,7 @@ extension RegisterPageViewModel {
         case setConfirmedPassword(_ value: String)
         case setPassword(_ value: String)
         case setDisplayName(_ value: String)
-        case tapRegisterButton(request: RegisterRequest = Current.api.register)
+        case tapRegisterButton
     }
 }
 
@@ -121,14 +126,31 @@ extension RegisterPageViewModel {
         return self
     }
     
-    static var withCorrectCredentials: RegisterPageViewModel {
-        RegisterPageViewModel()
+    static func withCorrectCredentials(sideEffects: RegisterPageViewModel.SideEffects = .mock) -> RegisterPageViewModel {
+        RegisterPageViewModel(sideEffects: sideEffects)
             .input(
                 .setEmailAdress(.validEmail),
                 .setPassword(.validPassword),
                 .setConfirmedPassword(.validPassword),
                 .setDisplayName(.validDisplayName)
         )
+    }
+}
+
+//MARK: Side Effects
+extension RegisterPageViewModel {
+    struct SideEffects {
+        var register: RegisterRequest
+    }
+}
+
+extension RegisterPageViewModel.SideEffects {
+    static var live: RegisterPageViewModel.SideEffects = .init(register: Current.api.register)
+    
+    static var mock: RegisterPageViewModel.SideEffects = .init { _ in
+        Just("")
+            .setFailureType(to: API.Error.self)
+            .eraseToAnyPublisher()
     }
 }
 

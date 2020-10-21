@@ -10,13 +10,12 @@ import XCTest
 import Combine
 import scrap_client_api
 @testable import Scrap
-@testable import Environment
 
 class RegisterPage_Tests: XCTestCase {
     var viewModel: RegisterPageViewModel!
     
     override func setUpWithError() throws {
-        viewModel = RegisterPageViewModel()
+        viewModel = RegisterPageViewModel(sideEffects: .mock)
         Current = .mock
     }
 
@@ -89,7 +88,7 @@ class RegisterPage_Tests: XCTestCase {
     
     func test_valid_credentials_enables_register_button() {
         RegisterPageViewModel
-            .withCorrectCredentials
+            .withCorrectCredentials()
             .thenAssertTrue(\.registerButtonEnabled)
     }
     
@@ -115,7 +114,7 @@ class RegisterPage_Tests: XCTestCase {
     
     func test_changing_valid_credentials_disables_register_button() {
         RegisterPageViewModel
-            .withCorrectCredentials
+            .withCorrectCredentials()
             .thenAssertTrue(\.registerButtonEnabled)
             .input(.setDisplayName(""))
             .thenAssertFalse(\.registerButtonEnabled)
@@ -124,11 +123,9 @@ class RegisterPage_Tests: XCTestCase {
     }
         
     func test_tapping_register_button_should_show_spinner() {
-        Current.api.register = delayedSilentFailure()
-        
         RegisterPageViewModel
-            .withCorrectCredentials
-            .input(.tapRegisterButton())
+            .withCorrectCredentials(sideEffects: .init(register: delayedSilentFailure()))
+            .input(.tapRegisterButton)
             .thenAssertTrue(\.isShowingLoadingSpinner)
     }
     
@@ -138,15 +135,17 @@ class RegisterPage_Tests: XCTestCase {
     
     func test_should_not_be_able_to_tap_register_button_when_disabled() {
         viewModel
-            .input(.tapRegisterButton())
+            .input(.tapRegisterButton)
             .thenAssertFalse(\.isShowingLoadingSpinner)
     }
     
     func test_displays_error_message_when_not_nil() {
-        viewModel = .withCorrectCredentials
+        
         let errorMessage = "Stuff went wrong, my dude!"
-        Current.api.register = visibleImmediateFailure(errorMessage: errorMessage)
-        viewModel.input(.tapRegisterButton())
+        
+        viewModel = .withCorrectCredentials(sideEffects: .init(register: visibleImmediateFailure(errorMessage: errorMessage)))
+        
+        viewModel.input(.tapRegisterButton)
         
         guard let receivedMessage = viewModel.errorMessage else {
             XCTFail()
@@ -157,84 +156,75 @@ class RegisterPage_Tests: XCTestCase {
     }
     
     func test_error_message_is_nil_when_register_button_is_tapped() {
-        viewModel = .withCorrectCredentials
         let errorMessage = "Stuff went wrong, my dude!"
         
-        Current.api.register = visibleImmediateFailure(errorMessage: errorMessage)
+        viewModel = .withCorrectCredentials(sideEffects: .init(register: visibleImmediateFailure(errorMessage: errorMessage)))
         
-        viewModel.input(.tapRegisterButton())
+        viewModel.input(.tapRegisterButton)
         
-        Current.api.register = { _ in Fail<Token, API.Error>(error: API.Error.silent)
+        viewModel.sideEffects.register = { _ in Fail<String, API.Error>(error: API.Error.silent)
             .eraseToAnyPublisher() }
-        viewModel.input(.tapRegisterButton())
+        viewModel.input(.tapRegisterButton)
         
         XCTAssertNil(viewModel.errorMessage)
     }
     
     func test_spinner_is_hidden_on_server_error_with_message() {
-        Current.api.register = visibleImmediateFailure(errorMessage: "")
-        
         RegisterPageViewModel
-            .withCorrectCredentials
-            .input(.tapRegisterButton())
+            .withCorrectCredentials(sideEffects: .init(register: visibleImmediateFailure(errorMessage: "")))
+            .input(.tapRegisterButton)
             .thenAssertFalse(\.isShowingLoadingSpinner)
     }
     
     func test_spinner_is_hidden_on_server_success() {
-        Current.api.register = { _ in
-            Just(Token(value: ""))
+        let sideEffects = RegisterPageViewModel.SideEffects { _ in
+            Just("")
                 .setFailureType(to: API.Error.self)
                 .eraseToAnyPublisher()
         }
         
         RegisterPageViewModel
-            .withCorrectCredentials
-            .input(.tapRegisterButton())
+            .withCorrectCredentials(sideEffects: sideEffects)
+            .input(.tapRegisterButton)
             .thenAssertFalse(\.isShowingLoadingSpinner)
     }
     
     func test_register_button_is_disabled_during_request() {
-        Current.api.register = delayedSilentFailure()
         
         RegisterPageViewModel
-            .withCorrectCredentials
-            .input(.tapRegisterButton())
+            .withCorrectCredentials(sideEffects: .init(register: delayedSilentFailure()))
+            .input(.tapRegisterButton)
             .thenAssertFalse(\.registerButtonEnabled)
     }
     
     func test_register_button_is_enabled_after_server_error() {
-        Current.api.register = visibleImmediateFailure(errorMessage: "")
         
         RegisterPageViewModel
-            .withCorrectCredentials
-            .input(.tapRegisterButton())
+            .withCorrectCredentials(sideEffects: .init(register: visibleImmediateFailure(errorMessage: "")))
+            .input(.tapRegisterButton)
             .thenAssertTrue(\.registerButtonEnabled)
     }
     
     func test_spinner_is_visible_during_request() {
-        Current.api.register = delayedSilentFailure()
         
         RegisterPageViewModel
-            .withCorrectCredentials
-            .input(.tapRegisterButton())
+            .withCorrectCredentials(sideEffects: .init(register: delayedSilentFailure()))
+            .input(.tapRegisterButton)
             .thenAssertTrue(\.isShowingLoadingSpinner)
     }
     
     func test_textfields_are_disabled_during_request() {
-        Current.api.register = delayedSilentFailure()
         
         RegisterPageViewModel
-            .withCorrectCredentials
-            .input(.tapRegisterButton())
+            .withCorrectCredentials(sideEffects: .init(register: delayedSilentFailure()))
+            .input(.tapRegisterButton)
             .thenAssertTrue(\.textFieldsAreDisabled)
     }
     
     func test_textfields_are_enabled_after_server_response() {
-        Current.api.register = visibleImmediateFailure(errorMessage: "")
-        
         RegisterPageViewModel
-            .withCorrectCredentials
-            .input(.tapRegisterButton())
+            .withCorrectCredentials(sideEffects: .init(register: visibleImmediateFailure(errorMessage: "")))
+            .input(.tapRegisterButton)
             .thenAssertFalse(\.textFieldsAreDisabled)
     }
 }
@@ -269,7 +259,7 @@ fileprivate func visibleImmediateFailure(errorMessage: String) -> RegisterReques
 
 fileprivate func delayedSilentFailure() -> RegisterRequest {
     return { _ in
-        Fail<Token, API.Error>(error: API.Error.silent)
+        Fail<String, API.Error>(error: API.Error.silent)
             .delay(for: 0.5, scheduler: RunLoop.main)
             .eraseToAnyPublisher()
     }

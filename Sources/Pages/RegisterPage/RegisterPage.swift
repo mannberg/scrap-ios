@@ -8,11 +8,11 @@
 
 import SwiftUI
 import Combine
-import Environment
 import scrap_client_api
+import scrap_data_models
 
 struct RegisterPage: View {
-    @StateObject var viewModel = RegisterPageViewModel()
+    @StateObject var viewModel = RegisterPageViewModel(sideEffects: .live)
     
     var body: some View {
         return NavigationView {
@@ -68,7 +68,7 @@ struct RegisterPage: View {
                         Spacer()
                         PrimaryButton(
                             title: "Register",
-                            action: { viewModel.input(.tapRegisterButton()) },
+                            action: { viewModel.input(.tapRegisterButton) },
                             isEnabled: viewModel.binding(get: \.registerButtonEnabled)
                         )
                         Spacer()
@@ -108,8 +108,6 @@ struct RegisterPage: View {
     }
 }
 
-
-
 struct RegisterPage_Previews_InitialState: PreviewProvider {
     static var previews: some View {
         RegisterPage()
@@ -118,39 +116,52 @@ struct RegisterPage_Previews_InitialState: PreviewProvider {
 
 struct RegisterPage_Previews_RegisterButtonEnabled: PreviewProvider {
     static var previews: some View {
-        Current.api.register = { _ in
+        
+        let sideEffects = RegisterPageViewModel.SideEffects { _ in
             
-            Fail<Token, API.Error>(error: API.Error.visible(message: "Error!"))
+            Fail<String, API.Error>(error: API.Error.visible(message: "Error!"))
                 .delay(for: 0.5, scheduler: RunLoop.main)
                 .eraseToAnyPublisher()
             
         }
-        let page = RegisterPage(viewModel: RegisterPageViewModel.withCorrectCredentials)
+
+        let page = RegisterPage(
+            viewModel: RegisterPageViewModel.withCorrectCredentials(sideEffects: sideEffects)
+        )
+        
         return page
     }
 }
 
 struct RegisterPage_Previews_RegisterButtonEnabled_SilentError: PreviewProvider {
     static var previews: some View {
-        Current.api.register = { _ in
-            
-            Fail<Token, API.Error>(error: API.Error.silent)
+        
+        let sideEffects = RegisterPageViewModel.SideEffects { _ in
+            Fail<String, API.Error>(error: API.Error.silent)
                 .delay(for: 0.5, scheduler: RunLoop.main)
                 .eraseToAnyPublisher()
             
         }
-        let page = RegisterPage(viewModel: RegisterPageViewModel.withCorrectCredentials)
+        
+        let page = RegisterPage(
+            viewModel: RegisterPageViewModel.withCorrectCredentials(sideEffects: sideEffects)
+        )
+        
         return page
     }
 }
 
 struct RegisterPage_Previews_ErrorMessage: PreviewProvider {
     static var previews: some View {
-        let viewModel = RegisterPageViewModel.withCorrectCredentials
-        viewModel.input(.tapRegisterButton { _ in
-            Fail<Token, API.Error>(error: API.Error.visible(message: "Error!"))
+        
+        let sideEffects = RegisterPageViewModel.SideEffects { _ in
+            Fail<String, API.Error>(error: API.Error.visible(message: "Error!"))
                 .eraseToAnyPublisher()
-        })
+        }
+        
+        let viewModel = RegisterPageViewModel.withCorrectCredentials(sideEffects: sideEffects)
+        
+        viewModel.input(.tapRegisterButton)
         
         let page = RegisterPage(viewModel: viewModel)
         let darkPage = RegisterPage(viewModel: viewModel).environment(\.colorScheme, .dark)
@@ -164,12 +175,16 @@ struct RegisterPage_Previews_ErrorMessage: PreviewProvider {
 
 struct RegisterPage_Previews_ProgressView: PreviewProvider {
     static var previews: some View {
-        let viewModel = RegisterPageViewModel.withCorrectCredentials
-        viewModel.input(.tapRegisterButton { _ in
-            Just(Token(value: ""))
-                .setFailureType(to: API.Error.self)
+        
+        let sideEffects = RegisterPageViewModel.SideEffects { _ in
+            Fail<String, API.Error>(error: API.Error.silent)
+                .delay(for: 0.5, scheduler: RunLoop.main)
                 .eraseToAnyPublisher()
-        })
+            
+        }
+        
+        let viewModel = RegisterPageViewModel.withCorrectCredentials(sideEffects: sideEffects)
+        viewModel.input(.tapRegisterButton)
         
         let page = RegisterPage(viewModel: viewModel)
         let darkPage = RegisterPage(viewModel: viewModel).environment(\.colorScheme, .dark)

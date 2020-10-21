@@ -11,7 +11,6 @@ import Combine
 import scrap_data_models
 import scrap_client_api
 @testable import Scrap
-@testable import Environment
 
 class LiveTests_Registration: XCTestCase {
 
@@ -41,7 +40,7 @@ class LiveTests_Registration: XCTestCase {
             password: "abcd1234"
         )
         
-        cancellable = Current.api.register(user).sink { r in
+        cancellable = Current.api.register(registrationCandidate: user).sink { r in
             result = r
             e.fulfill()
         } receiveValue: { _ in
@@ -70,7 +69,7 @@ class LiveTests_Registration: XCTestCase {
             password: ""
         )
         
-        cancellable = Current.api.register(user).sink { r in
+        cancellable = Current.api.register(registrationCandidate: user).sink { r in
             result = r
             e.fulfill()
         } receiveValue: { _ in

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Environment
 import IsValid
 import scrap_client_api
 

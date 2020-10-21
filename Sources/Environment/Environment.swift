@@ -11,7 +11,7 @@ import scrap_client_api
 public var Current: Environment = .live
 
 public struct Environment {
-    public var api: API
+    public let api: API
 }
 
 extension Environment {
