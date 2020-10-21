@@ -117,19 +117,25 @@ struct RegisterPage_Previews_InitialState: PreviewProvider {
 
 struct RegisterPage_Previews_RegisterButtonEnabled: PreviewProvider {
     static var previews: some View {
-        Current.api.register = { _, callback in
+        Current.api.register = { _ in
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                
-                callback(
-                    .failure(
-                        .server(
-                            message: "Error!"
-                        )
-                    )
-                )
-                
-            }
+            Fail<Token, API.Error>(error: API.Error.visible(message: "Error!"))
+                .delay(for: 0.5, scheduler: RunLoop.main)
+                .eraseToAnyPublisher()
+            
+        }
+        let page = RegisterPage(viewModel: RegisterPageViewModel.withCorrectCredentials)
+        return page
+    }
+}
+
+struct RegisterPage_Previews_RegisterButtonEnabled_SilentError: PreviewProvider {
+    static var previews: some View {
+        Current.api.register = { _ in
+            
+            Fail<Token, API.Error>(error: API.Error.silent)
+                .delay(for: 0.5, scheduler: RunLoop.main)
+                .eraseToAnyPublisher()
             
         }
         let page = RegisterPage(viewModel: RegisterPageViewModel.withCorrectCredentials)
@@ -140,14 +146,9 @@ struct RegisterPage_Previews_RegisterButtonEnabled: PreviewProvider {
 struct RegisterPage_Previews_ErrorMessage: PreviewProvider {
     static var previews: some View {
         let viewModel = RegisterPageViewModel.withCorrectCredentials
-        viewModel.input(.tapRegisterButton { _, callback in
-            callback(
-                .failure(
-                    .server(
-                        message: "Error!"
-                    )
-                )
-            )
+        viewModel.input(.tapRegisterButton { _ in
+            Fail<Token, API.Error>(error: API.Error.visible(message: "Error!"))
+                .eraseToAnyPublisher()
         })
         
         let page = RegisterPage(viewModel: viewModel)
@@ -163,8 +164,10 @@ struct RegisterPage_Previews_ErrorMessage: PreviewProvider {
 struct RegisterPage_Previews_ProgressView: PreviewProvider {
     static var previews: some View {
         let viewModel = RegisterPageViewModel.withCorrectCredentials
-        viewModel.input(.tapRegisterButton { _, _ in
-            
+        viewModel.input(.tapRegisterButton { _ in
+            Just(Token(value: ""))
+                .setFailureType(to: API.Error.self)
+                .eraseToAnyPublisher()
         })
         
         let page = RegisterPage(viewModel: viewModel)

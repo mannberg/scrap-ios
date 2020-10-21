@@ -24,16 +24,14 @@ class LoginPageViewModel: ObservableObject, ViewModel {
             
             let dummy = UserLoginCandidate(email: "", password: "")
             
-            request(dummy) { [weak self] result in
-                switch result {
-                case .failure(_):
-                    self?.isShowingLoadingSpinner = false
-                    self?.registerButtonEnabled = true
-                default:
-                    self?.isShowingLoadingSpinner = false
-                    self?.registerButtonEnabled = true
-                }
+            //TODO: Add Cancellable
+            _ = request(dummy).sink { [weak self] completion in
+                self?.isShowingLoadingSpinner = false
+                self?.registerButtonEnabled = true
+            } receiveValue: { token in
+                //save login token
             }
+
         case .tapRegisterButton:
             isPresentingRegisterPage = true
         case .dismissRegisterPage:

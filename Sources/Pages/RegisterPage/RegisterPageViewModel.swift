@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 import IsValid
 import Environment
 import scrap_data_models
@@ -31,16 +32,21 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
             hasOngoingRequest = true
             errorMessage = nil
             
-            request(userToRegister) { [weak self] result in
-                switch result {
+            registerRequestCancellable = request(userToRegister).sink { [weak self] completion in
+                
+                switch completion {
                 case .failure(let error):
-                    if case .server(let errorMessage) = error {
+                    if case .visible(let errorMessage) = error {
                         self?.errorMessage = errorMessage
                     }
-                    self?.hasOngoingRequest = false
                 default:
-                    self?.hasOngoingRequest = false
+                    break
                 }
+                
+                self?.hasOngoingRequest = false
+                
+            } receiveValue: { token in
+                //save token
             }
         }
     }
@@ -51,11 +57,10 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
     @Published private(set) var confirmedPassword: String = ""
     @Published private(set) var displayName: String = ""
     @Published private(set) var errorMessage: String?
+    @Published private(set) var hasOngoingRequest = false
     
     var isShowingLoadingSpinner: Bool { hasOngoingRequest }
     var textFieldsAreDisabled: Bool { hasOngoingRequest }
-    
-    private(set) var hasOngoingRequest = false
     
     var registerButtonEnabled: Bool {
         if hasOngoingRequest {
@@ -92,6 +97,8 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
             password: password
         )
     }
+    
+    private var registerRequestCancellable: AnyCancellable?
 }
 
 extension RegisterPageViewModel {

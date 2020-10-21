@@ -16,7 +16,7 @@ public struct TokenHandler {
     let tokenKey = "AuthorizationToken"
     
     //TODO: Write test that verifies new server token is always saved when retrieved.
-    public var saveToken: (Token) -> Result<Void, API.Error> = { token in
+    public var saveToken: (Token) -> Result<Token, API.Error> = { token in
         guard let tokenData = token.value.data(using: .utf8) else {
             //TODO: Notify server if token changes format
             //TODO: Write test that verifies our token structure does not change.
@@ -34,7 +34,7 @@ public struct TokenHandler {
         let status = SecItemAdd(query as CFDictionary, nil)
         
         //TODO: Failure should be logged to the server + the user should be notified
-        return status == noErr ? .success(()) : .failure(.silent)
+        return status == noErr ? .success(token) : .failure(.silent)
     }
     
     public var loadToken: () -> Result<Token, API.Error> = {
@@ -77,7 +77,7 @@ public struct TokenHandler {
 extension TokenHandler {
     static var mock: TokenHandler {
         TokenHandler(
-            saveToken: { _ in .success(()) },
+            saveToken: { _ in .success(Token(value: "")) },
             tokenValue: { nil }
         )
     }

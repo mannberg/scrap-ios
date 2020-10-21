@@ -7,24 +7,27 @@
 //
 
 import XCTest
+import Combine
 import scrap_data_models
 @testable import Scrap
 @testable import Environment
 
 class LiveTests_Registration: XCTestCase {
 
+    var cancellable: AnyCancellable?
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        cancellable = nil
     }
 
     //MARK: Needs updated credentials to pass
     func testRegisterRequest_expectSuccess() {
         let e = expectation(description: "")
-        var result: Result<Token, API.Error>!
+        var result: Subscribers.Completion<API.Error>!
         
         let user = UserRegistrationCandidate(
             displayName: "Joe",
@@ -32,15 +35,18 @@ class LiveTests_Registration: XCTestCase {
             password: "abcd1234"
         )
         
-        Current.api.register(user) { r in
+        cancellable = Current.api.register(user).sink { r in
             result = r
             e.fulfill()
+        } receiveValue: { _ in
+            print("")
         }
+
         
         waitForExpectations(timeout: 1)
         
         switch result {
-        case .success(let token):
+        case .finished:
             print("")
         case .failure(let error):
             XCTFail()
@@ -51,7 +57,7 @@ class LiveTests_Registration: XCTestCase {
     
     func testRegisterRequest_expectFailureDueToFaultyCredentials() {
         let e = expectation(description: "")
-        var result: Result<Token, API.Error>!
+        var result: Subscribers.Completion<API.Error>!
         
         let user = UserRegistrationCandidate(
             displayName: "Joe",
@@ -59,9 +65,11 @@ class LiveTests_Registration: XCTestCase {
             password: ""
         )
         
-        Current.api.register(user) { r in
+        cancellable = Current.api.register(user).sink { r in
             result = r
             e.fulfill()
+        } receiveValue: { _ in
+            
         }
         
         waitForExpectations(timeout: 1)
@@ -74,37 +82,35 @@ class LiveTests_Registration: XCTestCase {
     
     func testLoginRequest_expectSuccess() {
         let e = expectation(description: "")
-        var result: Result<Token, API.Error>!
         
         let user = UserLoginCandidate(
             email: "joe@south.com",
             password: "abcd1234"
         )
         
-        Current.api.login(user) {
-            result = $0
+        cancellable = Current.api.login(user).sink(receiveCompletion: { x in
+            XCTFail()
+        }, receiveValue: { v in
             e.fulfill()
-        }
+        })
         
         waitForExpectations(timeout: 2)
-        
-        if case .failure(_) = result {
-            XCTFail()
-        }
     }
     
     //MARK: Should succeed with hardcoded DB token
     func testMeRequest_expectSuccess() {
         let e = expectation(description: "")
-        var result: Result<String, API.Error>!
+        var result: Subscribers.Completion<API.Error>!
         
         Current.token.tokenValue = { Token(value: "RMTZAHQn/a0U4gf/uSALLw==") }
         
-        Current.api.test { r in
+        cancellable = Current.api.test().sink { r in
             result = r
             e.fulfill()
+        } receiveValue: { _ in
+            
         }
-        
+
         waitForExpectations(timeout: 1)
         
         if case .failure(_) = result {

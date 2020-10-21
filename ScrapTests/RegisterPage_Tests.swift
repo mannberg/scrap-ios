@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import Combine
 @testable import Scrap
 @testable import Environment
 
@@ -122,6 +123,8 @@ class RegisterPage_Tests: XCTestCase {
     }
         
     func test_tapping_register_button_should_show_spinner() {
+        Current.api.register = delayedSilentFailure()
+        
         RegisterPageViewModel
             .withCorrectCredentials
             .input(.tapRegisterButton())
@@ -141,15 +144,7 @@ class RegisterPage_Tests: XCTestCase {
     func test_displays_error_message_when_not_nil() {
         viewModel = .withCorrectCredentials
         let errorMessage = "Stuff went wrong, my dude!"
-        Current.api.register = { _, callback in
-            callback(
-                .failure(
-                    .server(
-                        message: errorMessage
-                    )
-                )
-            )
-        }
+        Current.api.register = visibleImmediateFailure(errorMessage: errorMessage)
         viewModel.input(.tapRegisterButton())
         
         guard let receivedMessage = viewModel.errorMessage else {
@@ -163,50 +158,21 @@ class RegisterPage_Tests: XCTestCase {
     func test_error_message_is_nil_when_register_button_is_tapped() {
         viewModel = .withCorrectCredentials
         let errorMessage = "Stuff went wrong, my dude!"
-        Current.api.register = { _, callback in
-            callback(
-                .failure(
-                    .server(
-                        message: errorMessage
-                    )
-                )
-            )
-        }
+        
+        Current.api.register = visibleImmediateFailure(errorMessage: errorMessage)
+        
         viewModel.input(.tapRegisterButton())
         
-        Current.api.register = { _, _ in }
+//        Current.api.register = { _ in Fail<Token, API.Error>(error: API.Error.silent)
+//            .eraseToAnyPublisher() }
         viewModel.input(.tapRegisterButton())
         
         XCTAssertNil(viewModel.errorMessage)
     }
     
     func test_spinner_is_hidden_on_server_error_with_message() {
-        Current.api.register = { _, callback in
-            callback(
-                .failure(
-                    .server(
-                        message: ""
-                    )
-                )
-            )
-        }
+        Current.api.register = visibleImmediateFailure(errorMessage: "")
         
-        RegisterPageViewModel
-            .withCorrectCredentials
-            .input(.tapRegisterButton())
-            .thenAssertFalse(\.isShowingLoadingSpinner)
-    }
-    
-    func test_spinner_is_hidden_on_server_error_without_message() {
-        Current.api.register = { _, callback in
-            callback(
-                .failure(
-                    .server(
-                        message: nil
-                    )
-                )
-            )
-        }
         RegisterPageViewModel
             .withCorrectCredentials
             .input(.tapRegisterButton())
@@ -214,11 +180,12 @@ class RegisterPage_Tests: XCTestCase {
     }
     
     func test_spinner_is_hidden_on_server_success() {
-        Current.api.register = { _, callback in
-            callback(
-                .success(Token(value: ""))
-            )
+        Current.api.register = { _ in
+            Just(Token(value: ""))
+                .setFailureType(to: API.Error.self)
+                .eraseToAnyPublisher()
         }
+        
         RegisterPageViewModel
             .withCorrectCredentials
             .input(.tapRegisterButton())
@@ -226,6 +193,8 @@ class RegisterPage_Tests: XCTestCase {
     }
     
     func test_register_button_is_disabled_during_request() {
+        Current.api.register = delayedSilentFailure()
+        
         RegisterPageViewModel
             .withCorrectCredentials
             .input(.tapRegisterButton())
@@ -233,15 +202,7 @@ class RegisterPage_Tests: XCTestCase {
     }
     
     func test_register_button_is_enabled_after_server_error() {
-        Current.api.register = { _, callback in
-            callback(
-                .failure(
-                    .server(
-                        message: nil
-                    )
-                )
-            )
-        }
+        Current.api.register = visibleImmediateFailure(errorMessage: "")
         
         RegisterPageViewModel
             .withCorrectCredentials
@@ -250,6 +211,8 @@ class RegisterPage_Tests: XCTestCase {
     }
     
     func test_spinner_is_visible_during_request() {
+        Current.api.register = delayedSilentFailure()
+        
         RegisterPageViewModel
             .withCorrectCredentials
             .input(.tapRegisterButton())
@@ -257,6 +220,8 @@ class RegisterPage_Tests: XCTestCase {
     }
     
     func test_textfields_are_disabled_during_request() {
+        Current.api.register = delayedSilentFailure()
+        
         RegisterPageViewModel
             .withCorrectCredentials
             .input(.tapRegisterButton())
@@ -264,15 +229,7 @@ class RegisterPage_Tests: XCTestCase {
     }
     
     func test_textfields_are_enabled_after_server_response() {
-        Current.api.register = { _, callback in
-            callback(
-                .failure(
-                    .server(
-                        message: nil
-                    )
-                )
-            )
-        }
+        Current.api.register = visibleImmediateFailure(errorMessage: "")
         
         RegisterPageViewModel
             .withCorrectCredentials
@@ -298,5 +255,21 @@ extension RegisterPageViewModel {
     func thenAssertTrue(_ predicate: @autoclosure () -> Bool) -> Self {
         XCTAssertTrue(predicate())
         return self
+    }
+}
+
+//MARK: Helpers
+fileprivate func visibleImmediateFailure(errorMessage: String) -> RegisterRequest {
+    return { _ in
+        Fail(error: API.Error.visible(message: errorMessage))
+            .eraseToAnyPublisher()
+    }
+}
+
+fileprivate func delayedSilentFailure() -> RegisterRequest {
+    return { _ in
+        Fail<Token, API.Error>(error: API.Error.silent)
+            .delay(for: 0.5, scheduler: RunLoop.main)
+            .eraseToAnyPublisher()
     }
 }

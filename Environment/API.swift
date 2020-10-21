@@ -7,118 +7,80 @@
 //
 
 import Foundation
+import Combine
 import scrap_data_models
 
+//MARK: Typealiases
 public typealias StatusCode = Int
-
-public typealias RequestCallback<Value> = (Result<Value, API.Error>) -> Void
-public typealias Request<Value> = (@escaping RequestCallback<Value>) -> Void
+public typealias ErrorTransform = (Data, StatusCode) -> API.Error
+public typealias ResponseTransform<T> = (Data, JSONDecoder) throws -> T
 
 //MARK: Request signatures
-public typealias RegisterRequest = (UserRegistrationCandidate, @escaping RequestCallback<Token>) -> Void
-public typealias LoginRequest = (UserLoginCandidate, @escaping RequestCallback<Token>) -> Void
-
-private typealias Perform<ReturnValue> = (
-    URLRequest, //request
-    (Data) -> ReturnValue?, //responseTransform
-    (Data, StatusCode) -> API.Error, //errorTransform
-    RequestCallback<ReturnValue> //callback
-)
+public typealias RegisterRequest = (UserRegistrationCandidate) -> AnyPublisher<Token, API.Error>
+public typealias LoginRequest = (UserLoginCandidate) -> AnyPublisher<Token, API.Error>
+public typealias TestRequest = () -> AnyPublisher<String, API.Error>
 
 public struct API {
+    private static let client = Client()
     
     //MARK: Endpoints
-    public var login: LoginRequest = { user, callback in
+    public var login: (UserLoginCandidate) -> AnyPublisher<Token, API.Error> = { loginCandidate in
         let request = URLRequest
             .post(.login)
-            .basicAuthorized(forUser: user)
+            .basicAuthorized(forUser: loginCandidate)
         
-        perform(
-            request: request,
-            responseTransform: { try? JSONDecoder().decode(Token.self, from: $0) },
-            callback: { result in
-                if case .success(let token) = result {
-                    _ = Current.token.saveToken(token)
-                }
-                
-                callback(result)
-            }
-        )
+        let errorTransform: ErrorTransform = { data, statusCode in
+            return .visible(message: "Dang!")
+        }
+        
+        return client.run(request, errorTransform: errorTransform)
+            .map(\.value)
+            .eraseToAnyPublisher()
     }
     
-    public var register: RegisterRequest = { user, callback in
+    public var register: RegisterRequest = { registrationCandidate in
         let request = URLRequest
             .post(.register)
-            .with(data: try? JSONEncoder().encode(user))
+            .with(data: try? JSONEncoder().encode(registrationCandidate))
         
-        perform(
-            request: request,
-            responseTransform: { return try? JSONDecoder().decode(Token.self, from: $0) },
-            errorTransform: { data, statusCode in
-                guard
-                    [400, 409].map { $0 == statusCode }.contains(true),
-                    let serverError = try? JSONDecoder().decode(ServerError.self, from: data)
-                else {
-                    return .visible(message: "Some generic error title")
-                }
-                
-                return .visible(message: serverError.reason)
-            },
-            callback: callback
-        )
-    }
-    
-    public var test: Request<String> = { callback in
-        guard let request = URLRequest.get(.test).tokenAuthorized else {
-            callback(.failure(.missingToken))
-            return
-        }
-        
-        perform(
-            request: request,
-            responseTransform: { String(data: $0, encoding: .utf8) },
-            callback: callback
-        )
-    }
-    
-    //MARK: Private
-    private static func perform<ReturnValue>(
-        request: URLRequest,
-        responseTransform: @escaping (Data) -> ReturnValue?,
-        errorTransform: @escaping (Data, StatusCode) -> API.Error = { _, _ in .silent },
-        callback: @escaping RequestCallback<ReturnValue>) {
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let errorTransform: ErrorTransform = { data, statusCode in
             guard
-                let data = data,
-                let response = response as? HTTPURLResponse,
-                error == nil
+                [400, 409].map({ $0 == statusCode }).contains(true),
+                let serverError = try? JSONDecoder().decode(ServerError.self, from: data)
             else {
-                callback(.failure(.connection))
-                return
-            }
-
-            guard (200 ... 299) ~= response.statusCode else {
-                callback(.failure(errorTransform(data, response.statusCode)))
-                return
-            }
-
-            guard let res = responseTransform(data) else {
-                callback(.failure(.parse))
-                return
+                return .visible(message: "Some generic error title")
             }
             
-            callback(.success(res))
+            return .visible(message: serverError.reason)
         }
-
-        task.resume()
+        
+        return client.run(request, errorTransform: errorTransform)
+            .map(\.value)
+            .eraseToAnyPublisher()
+    }
+    
+    public var test: TestRequest = {
+        guard let request = URLRequest.get(.test).tokenAuthorized else {
+            return Fail<String, API.Error>(error: .missingToken)
+                .eraseToAnyPublisher()
+        }
+        
+        let responseTransform: ResponseTransform<String> = { data, _ in
+            guard let value = String(data: data, encoding: .utf8) else {
+                throw API.Error.silent
+            }
+            
+            return value
+        }
+        
+        return client.run(request, responseTransform: responseTransform)
+            .map(\.value)
+            .eraseToAnyPublisher()
     }
 }
 
 public extension API {
     enum Error: Swift.Error {
-        case connection
-        case server(message: String? = nil)
         case visible(message: String)
         case silent
         case missingToken
@@ -130,6 +92,26 @@ public struct ServerError: Decodable {
     let reason: String
 }
 
+//TODO: Should this be a shared data model?
+public struct Token: Codable, Equatable, CustomStringConvertible {
+    public let value: String
+    public var description: String { value }
+    
+    public init(value: String) {
+        self.value = value
+    }
+}
+
+extension API {
+    static var mock: API {
+        API(
+            login: { x in Just(Token(value: "")).setFailureType(to: Error.self).eraseToAnyPublisher() },
+            register: { x in Just(Token(value: "")).setFailureType(to: Error.self).eraseToAnyPublisher() }
+        )
+    }
+}
+
+//MARK: Fileprivate
 extension URLRequest {
     static func post(_ endpoint: PostEndpoint) -> URLRequest {
         let base = "http://localhost:8080"
@@ -175,25 +157,6 @@ enum GetEndpoint {
     case test
 }
 
-//TODO: Should this be a shared data model?
-public struct Token: Codable, Equatable, CustomStringConvertible {
-    public let value: String
-    public var description: String { value }
-    
-    public init(value: String) {
-        self.value = value
-    }
-}
-
-extension API {
-    static var mock: API {
-        API(
-            login: { _, _ in },
-            register: { _, _ in }
-        )
-    }
-}
-
 extension URLRequest {
     var tokenAuthorized: URLRequest? {
         guard let token = Current.token.tokenValue() else {
@@ -235,5 +198,47 @@ extension URLRequest {
         
         return mutableSelf
     }
+}
+
+//MARK: Client
+fileprivate struct Client {
+    struct Response<T> {
+        let value: T
+        let response: URLResponse
+    }
+    
+    func run<T: Decodable>(
+        _ request: URLRequest,
+        errorTransform: @escaping ErrorTransform = { _, _ in .silent },
+        responseTransform: @escaping ResponseTransform<T> = { data, decoder in try decoder.decode(T.self, from: data) },
+        decoder: JSONDecoder = JSONDecoder()
+    ) -> AnyPublisher<Response<T>, API.Error> {
+            return URLSession.shared
+                .dataTaskPublisher(for: request)
+                .tryMap { result -> Response<T> in
+                    
+                    guard let httpURLResponse = result.response as? HTTPURLResponse else {
+                        throw API.Error.silent
+                    }
+
+                    guard (200...299) ~= httpURLResponse.statusCode else {
+                        throw errorTransform(result.data, httpURLResponse.statusCode)
+                    }
+                    
+                    //TODO: Parse errors should be handled
+                    let value = try responseTransform(result.data, decoder)
+                    
+                    return Response(value: value, response: result.response)
+                }
+                .mapError { error -> API.Error in
+                    guard let error = error as? API.Error else {
+                        return .silent
+                    }
+                    
+                    return error
+                }
+                .receive(on: DispatchQueue.main)
+                .eraseToAnyPublisher()
+        }
 }
 
