@@ -6,25 +6,24 @@
 //  Copyright © 2020 Mannberg. All rights reserved.
 //
 
+import scrap_client_api
+
 public var Current: Environment = .live
 
 public struct Environment {
     public var api: API
-    public var token: TokenHandler
 }
 
 extension Environment {
     static var live: Environment {
         Environment(
-            api: API(),
-            token: TokenHandler()
+            api: API()
         )
     }
     
     static var mock: Environment {
         Environment(
-            api: .mock,
-            token: .mock
+            api: .mock
         )
     }
 }

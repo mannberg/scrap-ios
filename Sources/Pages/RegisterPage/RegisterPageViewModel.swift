@@ -11,6 +11,7 @@ import Combine
 import IsValid
 import Environment
 import scrap_data_models
+import scrap_client_api
 
 class RegisterPageViewModel: ObservableObject, ViewModel {
     

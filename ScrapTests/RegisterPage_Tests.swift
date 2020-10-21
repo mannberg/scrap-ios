@@ -8,6 +8,7 @@
 
 import XCTest
 import Combine
+import scrap_client_api
 @testable import Scrap
 @testable import Environment
 
@@ -163,8 +164,8 @@ class RegisterPage_Tests: XCTestCase {
         
         viewModel.input(.tapRegisterButton())
         
-//        Current.api.register = { _ in Fail<Token, API.Error>(error: API.Error.silent)
-//            .eraseToAnyPublisher() }
+        Current.api.register = { _ in Fail<Token, API.Error>(error: API.Error.silent)
+            .eraseToAnyPublisher() }
         viewModel.input(.tapRegisterButton())
         
         XCTAssertNil(viewModel.errorMessage)

@@ -8,16 +8,16 @@
 
 import Foundation
 
-public struct UserLoginCandidate {
-    public let email: String
-    public let password: String
-    
-    public init(email: String, password: String) {
-        self.email = email
-        self.password = password
-    }
-    
-    var basicAuthorizationFormatted: String {
-        Data("\(email):\(password)".utf8).base64EncodedString()
-    }
-}
+//public struct UserLoginCandidate {
+//    public let email: String
+//    public let password: String
+//    
+//    public init(email: String, password: String) {
+//        self.email = email
+//        self.password = password
+//    }
+//    
+//    var basicAuthorizationFormatted: String {
+//        Data("\(email):\(password)".utf8).base64EncodedString()
+//    }
+//}

@@ -8,6 +8,7 @@
 
 import XCTest
 import Combine
+import scrap_client_api
 @testable import Scrap
 @testable import Environment
 

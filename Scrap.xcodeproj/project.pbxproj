@@ -14,18 +14,12 @@
 		3127DD73245781C7009551D8 /* IsValid in Frameworks */ = {isa = PBXBuildFile; productRef = 3127DD72245781C7009551D8 /* IsValid */; };
 		3134C31124CB553A00041F98 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3134C31024CB553900041F98 /* PrimaryButton.swift */; };
 		3134C31324D2068700041F98 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3134C31224D2068600041F98 /* Card.swift */; };
-		3134C31524D236BA00041F98 /* API_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3134C31424D236BA00041F98 /* API_tests.swift */; };
 		3134C32624D3457100041F98 /* Environment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3134C31D24D3457000041F98 /* Environment.framework */; };
 		3134C32D24D3457100041F98 /* EnvironmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3134C32C24D3457100041F98 /* EnvironmentTests.swift */; };
 		3134C32F24D3457100041F98 /* Environment.h in Headers */ = {isa = PBXBuildFile; fileRef = 3134C31F24D3457100041F98 /* Environment.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3134C33224D3457100041F98 /* Environment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3134C31D24D3457000041F98 /* Environment.framework */; };
 		3134C33324D3457100041F98 /* Environment.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3134C31D24D3457000041F98 /* Environment.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		3134C33B24D3458900041F98 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B9E4424B1090B0043EC67 /* API.swift */; };
-		3134C33C24D3458E00041F98 /* TokenHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3134C31624D3444F00041F98 /* TokenHandler.swift */; };
-		3134C33D24D345AF00041F98 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F27F245606A1000AA1B0 /* Environment.swift */; };
 		3134C33E24D345CD00041F98 /* UserLoginCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31ABAE74248D709F00CA463B /* UserLoginCandidate.swift */; };
-		3134C34124D3462800041F98 /* scrap-data-models in Frameworks */ = {isa = PBXBuildFile; productRef = 3134C34024D3462800041F98 /* scrap-data-models */; };
-		3134C34324D3730F00041F98 /* Token_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3134C34224D3730E00041F98 /* Token_tests.swift */; };
 		313524FD2469D66D00BC6441 /* LiveTests_Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313524FC2469D66D00BC6441 /* LiveTests_Registration.swift */; };
 		31352508246D626B00BC6441 /* RegisterPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31352507246D626B00BC6441 /* RegisterPage.swift */; };
 		3174F2602454AE7D000AA1B0 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F25F2454AE7D000AA1B0 /* LoginPage.swift */; };
@@ -34,7 +28,8 @@
 		3174F2682454AE85000AA1B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3174F2662454AE85000AA1B0 /* LaunchScreen.storyboard */; };
 		3174F2732454AE85000AA1B0 /* LoginPage_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F2722454AE85000AA1B0 /* LoginPage_Tests.swift */; };
 		3174F27E2454AFD8000AA1B0 /* LoginPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */; };
-		31A4DDB724DEC27600BF9C08 /* LiveTests+Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A4DDB624DEC27600BF9C08 /* LiveTests+Token.swift */; };
+		319A5BDD25401E81008DF93A /* scrap-client-api in Frameworks */ = {isa = PBXBuildFile; productRef = 319A5BDC25401E81008DF93A /* scrap-client-api */; };
+		319A5BF425402202008DF93A /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3174F27F245606A1000AA1B0 /* Environment.swift */; };
 		31BBFD1324A3E72100508A76 /* ScrapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BBFD1224A3E72100508A76 /* ScrapApp.swift */; };
 /* End PBXBuildFile section */
 
@@ -97,15 +92,12 @@
 		3127DD6F2457791A009551D8 /* RegisterPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPageViewModel.swift; sourceTree = "<group>"; };
 		3134C31024CB553900041F98 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		3134C31224D2068600041F98 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
-		3134C31424D236BA00041F98 /* API_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API_tests.swift; sourceTree = "<group>"; };
-		3134C31624D3444F00041F98 /* TokenHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHandler.swift; sourceTree = "<group>"; };
 		3134C31D24D3457000041F98 /* Environment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Environment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3134C31F24D3457100041F98 /* Environment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Environment.h; sourceTree = "<group>"; };
 		3134C32024D3457100041F98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3134C32524D3457100041F98 /* EnvironmentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnvironmentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3134C32C24D3457100041F98 /* EnvironmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentTests.swift; sourceTree = "<group>"; };
 		3134C32E24D3457100041F98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3134C34224D3730E00041F98 /* Token_tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token_tests.swift; sourceTree = "<group>"; };
 		313524FA2469D66D00BC6441 /* LiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		313524FC2469D66D00BC6441 /* LiveTests_Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTests_Registration.swift; sourceTree = "<group>"; };
 		313524FE2469D66D00BC6441 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -121,8 +113,6 @@
 		3174F2742454AE85000AA1B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3174F27D2454AFD8000AA1B0 /* LoginPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewModel.swift; sourceTree = "<group>"; };
 		3174F27F245606A1000AA1B0 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
-		317B9E4424B1090B0043EC67 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		31A4DDB624DEC27600BF9C08 /* LiveTests+Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LiveTests+Token.swift"; sourceTree = "<group>"; };
 		31ABAE74248D709F00CA463B /* UserLoginCandidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginCandidate.swift; sourceTree = "<group>"; };
 		31BBFD1224A3E72100508A76 /* ScrapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,7 +122,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3134C34124D3462800041F98 /* scrap-data-models in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +146,7 @@
 			files = (
 				3127DD73245781C7009551D8 /* IsValid in Frameworks */,
 				3134C33224D3457100041F98 /* Environment.framework in Frameworks */,
+				319A5BDD25401E81008DF93A /* scrap-client-api in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,8 +201,6 @@
 			isa = PBXGroup;
 			children = (
 				3174F27F245606A1000AA1B0 /* Environment.swift */,
-				3134C31624D3444F00041F98 /* TokenHandler.swift */,
-				317B9E4424B1090B0043EC67 /* API.swift */,
 				3134C31F24D3457100041F98 /* Environment.h */,
 				3134C32024D3457100041F98 /* Info.plist */,
 			);
@@ -238,7 +226,6 @@
 		313524FB2469D66D00BC6441 /* LiveTests */ = {
 			isa = PBXGroup;
 			children = (
-				31A4DDB624DEC27600BF9C08 /* LiveTests+Token.swift */,
 				313524FC2469D66D00BC6441 /* LiveTests_Registration.swift */,
 				313524FE2469D66D00BC6441 /* Info.plist */,
 			);
@@ -297,11 +284,9 @@
 		3174F2712454AE85000AA1B0 /* ScrapTests */ = {
 			isa = PBXGroup;
 			children = (
-				3134C34224D3730E00041F98 /* Token_tests.swift */,
 				3174F2722454AE85000AA1B0 /* LoginPage_Tests.swift */,
 				3174F2742454AE85000AA1B0 /* Info.plist */,
 				3127DD6C245778DF009551D8 /* RegisterPage_Tests.swift */,
-				3134C31424D236BA00041F98 /* API_tests.swift */,
 			);
 			path = ScrapTests;
 			sourceTree = "<group>";
@@ -343,7 +328,6 @@
 			);
 			name = Environment;
 			packageProductDependencies = (
-				3134C34024D3462800041F98 /* scrap-data-models */,
 			);
 			productName = Environment;
 			productReference = 3134C31D24D3457000041F98 /* Environment.framework */;
@@ -403,6 +387,7 @@
 			name = Scrap;
 			packageProductDependencies = (
 				3127DD72245781C7009551D8 /* IsValid */,
+				319A5BDC25401E81008DF93A /* scrap-client-api */,
 			);
 			productName = "TDD-Swift";
 			productReference = 3174F2582454AE7D000AA1B0 /* Scrap.app */;
@@ -468,6 +453,7 @@
 			packageReferences = (
 				3127DD71245781C7009551D8 /* XCRemoteSwiftPackageReference "IsValid" */,
 				313525042469E7E100BC6441 /* XCRemoteSwiftPackageReference "scrap-data-models" */,
+				319A5BDB25401E81008DF93A /* XCRemoteSwiftPackageReference "scrap-client-api" */,
 			);
 			productRefGroup = 3174F2592454AE7D000AA1B0 /* Products */;
 			projectDirPath = "";
@@ -529,9 +515,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3134C33E24D345CD00041F98 /* UserLoginCandidate.swift in Sources */,
-				3134C33B24D3458900041F98 /* API.swift in Sources */,
-				3134C33D24D345AF00041F98 /* Environment.swift in Sources */,
-				3134C33C24D3458E00041F98 /* TokenHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,7 +531,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				313524FD2469D66D00BC6441 /* LiveTests_Registration.swift in Sources */,
-				31A4DDB724DEC27600BF9C08 /* LiveTests+Token.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +547,7 @@
 				3134C31324D2068700041F98 /* Card.swift in Sources */,
 				31352508246D626B00BC6441 /* RegisterPage.swift in Sources */,
 				3127DD6924561C91009551D8 /* ViewModel.swift in Sources */,
+				319A5BF425402202008DF93A /* Environment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,10 +555,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3134C31524D236BA00041F98 /* API_tests.swift in Sources */,
 				3174F2732454AE85000AA1B0 /* LoginPage_Tests.swift in Sources */,
 				3127DD6D245778DF009551D8 /* RegisterPage_Tests.swift in Sources */,
-				3134C34324D3730F00041F98 /* Token_tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1025,6 +1006,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		319A5BDB25401E81008DF93A /* XCRemoteSwiftPackageReference "scrap-client-api" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "file:///Users/aje/code/github/scrap-client-api";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1033,10 +1022,10 @@
 			package = 3127DD71245781C7009551D8 /* XCRemoteSwiftPackageReference "IsValid" */;
 			productName = IsValid;
 		};
-		3134C34024D3462800041F98 /* scrap-data-models */ = {
+		319A5BDC25401E81008DF93A /* scrap-client-api */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 313525042469E7E100BC6441 /* XCRemoteSwiftPackageReference "scrap-data-models" */;
-			productName = "scrap-data-models";
+			package = 319A5BDB25401E81008DF93A /* XCRemoteSwiftPackageReference "scrap-client-api" */;
+			productName = "scrap-client-api";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

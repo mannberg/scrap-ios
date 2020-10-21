@@ -9,6 +9,7 @@
 import SwiftUI
 import Combine
 import Environment
+import scrap_client_api
 
 struct RegisterPage: View {
     @StateObject var viewModel = RegisterPageViewModel()

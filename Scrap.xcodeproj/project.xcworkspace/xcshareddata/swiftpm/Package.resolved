@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "scrap-client-api",
+        "repositoryURL": "/Users/aje/code/github/scrap-client-api",
+        "state": {
+          "branch": "main",
+          "revision": "f69dbe73bb37a193136af0703a5b845b177adeb9",
+          "version": null
+        }
+      },
+      {
         "package": "scrap-data-models",
         "repositoryURL": "https://github.com/mannberg/scrap-data-models",
         "state": {
