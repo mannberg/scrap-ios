@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct RootView: View {
-    @ObservedObject var viewModel = RootViewModel()
+    @StateObject var viewModel = RootViewModel()
     
     var body: some View {
         switch viewModel.userState {
@@ -20,11 +20,16 @@ struct RootView: View {
                 }
             }
         case .needsToRegister:
-            RegisterPage().transition(.move(edge: .bottom))
+            RegisterPage(viewModel: .init(
+                userState: $viewModel.userState,
+                sideEffects: .live
+            ))
+            .transition(.move(edge: .bottom))
         case .needsToLogin:
-            LoginPage().transition(.move(edge: .bottom))
+            LoginPage(viewModel: .init(userState: $viewModel.userState))
+                .transition(.move(edge: .bottom))
         case .undetermined:
-            RegisterPage().transition(.move(edge: .bottom))
+            Text("Hey!")
         }
     }
 }

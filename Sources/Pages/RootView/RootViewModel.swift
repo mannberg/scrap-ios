@@ -23,7 +23,7 @@ class RootViewModel: ObservableObject, ViewModel {
     }
     
     //MARK: Output
-    @Published private(set) var userState: UserState = .undetermined
+    @Published var userState: UserState = .undetermined
     
     //MARK: Private
     private var cancellables = Set<AnyCancellable>()

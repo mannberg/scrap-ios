@@ -6,15 +6,19 @@
 //  Copyright © 2020 Mannberg. All rights reserved.
 //
 
-import Foundation
 import Combine
+import SwiftUI
 import IsValid
 import scrap_data_models
 import scrap_client_api
 
 class RegisterPageViewModel: ObservableObject, ViewModel {
     
-    init(sideEffects: SideEffects = .live) {
+    init(
+        userState: Binding<RootViewModel.UserState> = .constant(.needsToLogin),
+        sideEffects: SideEffects = .live
+    ) {
+        self.userState = userState
         self.sideEffects = sideEffects
     }
     
@@ -54,6 +58,11 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
             } receiveValue: { token in
                 //save token
             }
+            
+        case .tapGoToLoginButton:
+            self.hasOngoingRequest = true
+            
+            userState.wrappedValue = .needsToLogin
         }
     }
     
@@ -64,6 +73,8 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
     @Published private(set) var displayName: String = ""
     @Published private(set) var errorMessage: String?
     @Published private(set) var hasOngoingRequest = false
+    
+    private(set) var userState: Binding<RootViewModel.UserState>
     
     var isShowingLoadingSpinner: Bool { hasOngoingRequest }
     var textFieldsAreDisabled: Bool { hasOngoingRequest }
@@ -107,6 +118,7 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
     private var registerRequestCancellable: AnyCancellable?
 }
 
+//TODO: Make sure all Actions uses same grammatical tense
 extension RegisterPageViewModel {
     enum Action {
         case setEmailAdress(_ value: String)
@@ -114,6 +126,7 @@ extension RegisterPageViewModel {
         case setPassword(_ value: String)
         case setDisplayName(_ value: String)
         case tapRegisterButton
+        case tapGoToLoginButton
     }
 }
 

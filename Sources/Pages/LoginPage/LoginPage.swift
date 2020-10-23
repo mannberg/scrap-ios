@@ -10,39 +10,49 @@ import SwiftUI
 import Combine
 
 struct LoginPage: View {
-    @ObservedObject var viewModel = LoginPageViewModel()
+    @ObservedObject var viewModel: LoginPageViewModel
     
     var body: some View {
-        
-        return VStack {
-            Input(
-                title: "Email adress",
-                placeholder: "Email adress",
-                binding: self.viewModel.binding(
-                    get: \.email,
-                    toAction: { .setEmailAdress($0) }
-                ),
-                textContentType: .emailAddress
-            )
-            Input(
-                title: "Password",
-                placeholder: "Password",
-                binding: self.viewModel.binding(
-                    get: \.password,
-                    toAction: { .setPassword($0) }
-                ),
-                textContentType: .password
-            )
+        NavigationView {
+            VStack {
+                Card {
+                    Input(
+                        title: "Email adress",
+                        placeholder: "Email adress",
+                        binding: self.viewModel.binding(
+                            get: \.email,
+                            toAction: { .setEmailAdress($0) }
+                        ),
+                        textContentType: .emailAddress
+                    )
+                    Input(
+                        title: "Password",
+                        placeholder: "Password",
+                        binding: self.viewModel.binding(
+                            get: \.password,
+                            toAction: { .setPassword($0) }
+                        ),
+                        textContentType: .password
+                    )
 
-            Button("Login") {
-                self.viewModel.input(.tapLoginButton())
-            }.disabled(!viewModel.loginButtonEnabled)
-            
-            Button(action: { self.viewModel.input(.tapRegisterButton) }, label: { Text("Register") }).sheet(isPresented: viewModel.binding(
-                get: \.isPresentingRegisterPage,
-                toAction: { _ in .dismissRegisterPage }
-            )) {
-                Text("Modal")
+                    HStack {
+                        Spacer()
+                        PrimaryButton(
+                            title: "Login",
+                            action: { viewModel.input(.tapLoginButton()) },
+                            isEnabled: viewModel.binding(get: \.loginButtonEnabled)
+                        )
+                        Spacer()
+                    }
+                    .padding([.top, .bottom], 15)
+                    
+                    Button("Register a new account!") {
+                        withAnimation {
+                            viewModel.input(.tapGoToRegisterButton)
+                        }
+                    }
+                }
+                Spacer()
             }
         }
     }
@@ -50,6 +60,6 @@ struct LoginPage: View {
 
 struct LoginPage_Previews: PreviewProvider {
     static var previews: some View {
-        LoginPage()
+        LoginPage(viewModel: .init(userState: .constant(.needsToLogin)))
     }
 }

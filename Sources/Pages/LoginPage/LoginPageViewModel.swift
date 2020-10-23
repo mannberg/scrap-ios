@@ -6,11 +6,15 @@
 //  Copyright © 2020 Mannberg. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 import IsValid
 import scrap_client_api
 
 class LoginPageViewModel: ObservableObject, ViewModel {
+    
+    init(userState: Binding<RootViewModel.UserState>) {
+        self.userState = userState
+    }
     
     func input(_ action: LoginPageViewModel.Action) {
         switch action {
@@ -32,10 +36,8 @@ class LoginPageViewModel: ObservableObject, ViewModel {
                 //save login token
             }
 
-        case .tapRegisterButton:
-            isPresentingRegisterPage = true
-        case .dismissRegisterPage:
-            isPresentingRegisterPage = false
+        case .tapGoToRegisterButton:
+            self.userState.wrappedValue = .needsToRegister
         case .setEmailAdress(let value):
             self.email = value
         case .setPassword(let value):
@@ -46,9 +48,11 @@ class LoginPageViewModel: ObservableObject, ViewModel {
     //Output
     @Published private(set) var email: String = ""
     @Published private(set) var password: String = ""
-    @Published private(set) var isPresentingRegisterPage: Bool = false
     @Published private(set) var registerButtonEnabled: Bool = true
+    
     private(set) var isShowingLoadingSpinner = false
+    
+    private(set) var userState: Binding<RootViewModel.UserState>
     
     var loginButtonEnabled: Bool {
         isValidEmail && isValidPassword
@@ -66,8 +70,7 @@ class LoginPageViewModel: ObservableObject, ViewModel {
 extension LoginPageViewModel {
     enum Action {
         case tapLoginButton(request: LoginRequest = Current.api.login)
-        case tapRegisterButton
-        case dismissRegisterPage
+        case tapGoToRegisterButton
         case setEmailAdress(_ value: String)
         case setPassword(_ value: String)
     }

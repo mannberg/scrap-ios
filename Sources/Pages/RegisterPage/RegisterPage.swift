@@ -12,7 +12,7 @@ import scrap_client_api
 import scrap_data_models
 
 struct RegisterPage: View {
-    @StateObject var viewModel = RegisterPageViewModel(sideEffects: .live)
+    @ObservedObject var viewModel: RegisterPageViewModel
     
     var body: some View {
         return NavigationView {
@@ -73,7 +73,13 @@ struct RegisterPage: View {
                         )
                         Spacer()
                     }
-                    .padding([.top, .bottom], 15)
+                    .padding([.top, .bottom], 5)
+                    
+                    Button("I already have an account!") {
+                        withAnimation {
+                            viewModel.input(.tapGoToLoginButton)
+                        }
+                    }
                     
                     if let errorMessage = viewModel.errorMessage {
                         Text(errorMessage)
@@ -110,7 +116,7 @@ struct RegisterPage: View {
 
 struct RegisterPage_Previews_InitialState: PreviewProvider {
     static var previews: some View {
-        RegisterPage()
+        RegisterPage(viewModel: .init())
     }
 }
 
