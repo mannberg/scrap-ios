@@ -54,6 +54,18 @@ struct LoginPage: View {
                             .foregroundColor(Color("PrimaryButtonEnabled"))
                     }
                     .padding(.bottom, 20)
+                    
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .font(.subheadline)
+                            .foregroundColor(.red)
+                            .cornerRadius(8)
+                            .padding(.bottom, 15)
+                    }
+                    
+                    if viewModel.isShowingLoadingSpinner {
+                        ProgressView("")
+                    }
                 }
                 Spacer()
             }

@@ -30,12 +30,20 @@ class LoginPageViewModel: ObservableObject, ViewModel {
                 return
             }
             
-            isShowingLoadingSpinner = true
-            registerButtonEnabled = false
+            hasOngoingRequest = true
+            errorMessage = nil
             
             loginRequestCancellable = sideEffects.login(userToLogin).sink { [weak self] completion in
-                self?.isShowingLoadingSpinner = false
-                self?.registerButtonEnabled = true
+                switch completion {
+                case .failure(let error):
+                    if case .visible(let errorMessage) = error {
+                        self?.errorMessage = errorMessage
+                    }
+                default:
+                    break
+                }
+                
+                self?.hasOngoingRequest = false
             } receiveValue: { token in
                 
             }
@@ -53,13 +61,19 @@ class LoginPageViewModel: ObservableObject, ViewModel {
     @Published private(set) var email: String = ""
     @Published private(set) var password: String = ""
     @Published private(set) var registerButtonEnabled: Bool = true
-    
-    private(set) var isShowingLoadingSpinner = false
+    @Published private(set) var errorMessage: String?
+    @Published private(set) var hasOngoingRequest = false
     
     private(set) var userState: Binding<RootViewModel.UserState>
     
+    var isShowingLoadingSpinner: Bool { hasOngoingRequest }
+    
     var loginButtonEnabled: Bool {
-        isValidEmail && isValidPassword
+        if hasOngoingRequest {
+            return false
+        }
+        
+        return isValidEmail && isValidPassword
     }
     
     //MARK: Private
