@@ -43,7 +43,7 @@ class LiveTests_Registration: XCTestCase {
         cancellable = Current.api.register(registrationCandidate: user).sink { r in
             result = r
             e.fulfill()
-        } receiveValue: { _ in
+        } receiveValue: { value in
             print("")
         }
 

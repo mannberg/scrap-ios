@@ -12,7 +12,13 @@ import SwiftUI
 struct ScrapApp: App {
     var body: some Scene {
         WindowGroup {
-            RegisterPage()
+            RootView()
         }
+    }
+}
+
+struct ScrapApp_Previews: PreviewProvider {
+    static var previews: some View {
+        RootView()
     }
 }
