@@ -73,20 +73,23 @@ struct RegisterPage: View {
                         )
                         Spacer()
                     }
-                    .padding([.top, .bottom], 5)
+                    .padding([.top, .bottom], 10)
                     
-                    Button("I already have an account!") {
-                        withAnimation {
-                            viewModel.input(.tapGoToLoginButton)
-                        }
+                    Button(action:  { withAnimation {
+                        viewModel.input(.tapGoToLoginButton)
+                    }}) {
+                        Text("I already have an account!")
+                            .font(.subheadline)
+                            .foregroundColor(Color("PrimaryButtonEnabled"))
                     }
+                    .padding(.bottom, 20)
                     
                     if let errorMessage = viewModel.errorMessage {
                         Text(errorMessage)
                             .font(.subheadline)
                             .foregroundColor(.red)
                             .cornerRadius(8)
-                            .padding([.top, .bottom], 15)
+                            .padding(.bottom, 15)
                     }
                     
                     if viewModel.isShowingLoadingSpinner {
@@ -96,14 +99,12 @@ struct RegisterPage: View {
                 
                 Spacer()
             }
-//            .background(Color("Background").edgesIgnoringSafeArea(.all))
-            .background(LinearGradient(gradient: Gradient(colors: [Color("Background"), Color("Card")]), startPoint: .top, endPoint: .bottom))
-//            .navigationBarTitle("Register account", displayMode: .inline)
+            .background(Color("Background").edgesIgnoringSafeArea(.all))
+//            .background(LinearGradient(gradient: Gradient(colors: [Color("Background"), Color("Card")]), startPoint: .top, endPoint: .bottom))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack {
-//                        Image(systemName: "sun.min.fill")
                         Text("Register Account")
                             .font(.headline)
                             
