@@ -252,7 +252,7 @@ extension RegisterPageViewModel {
 //MARK: Helpers
 fileprivate func visibleImmediateFailure(errorMessage: String) -> RegisterRequest {
     return { _ in
-        Fail(error: API.Error.visible(message: errorMessage))
+        Fail(error: API.Error.server(message: errorMessage))
             .eraseToAnyPublisher()
     }
 }

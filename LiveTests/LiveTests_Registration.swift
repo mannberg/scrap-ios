@@ -92,7 +92,7 @@ class LiveTests_Registration: XCTestCase {
             password: "abcd1234"
         )
         
-        cancellable = Current.api.login(user).sink(receiveCompletion: { x in
+        cancellable = Current.api.login(loginCandidate: user).sink(receiveCompletion: { x in
             XCTFail()
         }, receiveValue: { v in
             e.fulfill()

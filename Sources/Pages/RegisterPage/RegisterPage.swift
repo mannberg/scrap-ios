@@ -126,7 +126,7 @@ struct RegisterPage_Previews_RegisterButtonEnabled: PreviewProvider {
         
         let sideEffects = RegisterPageViewModel.SideEffects { _ in
             
-            Fail<String, API.Error>(error: API.Error.visible(message: "Error!"))
+            Fail<String, API.Error>(error: .server(message: "Error!"))
                 .delay(for: 0.5, scheduler: RunLoop.main)
                 .eraseToAnyPublisher()
             
@@ -162,7 +162,7 @@ struct RegisterPage_Previews_ErrorMessage: PreviewProvider {
     static var previews: some View {
         
         let sideEffects = RegisterPageViewModel.SideEffects { _ in
-            Fail<String, API.Error>(error: API.Error.visible(message: "Error!"))
+            Fail<String, API.Error>(error: .server(message: "Error!"))
                 .eraseToAnyPublisher()
         }
         

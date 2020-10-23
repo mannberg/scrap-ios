@@ -32,7 +32,8 @@ struct LoginPage: View {
                             get: \.password,
                             toAction: { .setPassword($0) }
                         ),
-                        textContentType: .password
+                        textContentType: .password,
+                        type: .secure
                     )
 
                     HStack {
