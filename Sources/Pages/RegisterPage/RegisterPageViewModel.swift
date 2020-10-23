@@ -56,7 +56,7 @@ class RegisterPageViewModel: ObservableObject, ViewModel {
                 self?.hasOngoingRequest = false
                 
             } receiveValue: { token in
-                //save token
+                
             }
             
         case .tapGoToLoginButton:
@@ -158,9 +158,9 @@ extension RegisterPageViewModel {
 }
 
 extension RegisterPageViewModel.SideEffects {
-    static var live: RegisterPageViewModel.SideEffects = .init(register: Current.api.register)
+    static var live: Self = .init(register: Current.api.register)
     
-    static var mock: RegisterPageViewModel.SideEffects = .init { _ in
+    static var mock: Self = .init { _ in
         Just("")
             .setFailureType(to: API.Error.self)
             .eraseToAnyPublisher()

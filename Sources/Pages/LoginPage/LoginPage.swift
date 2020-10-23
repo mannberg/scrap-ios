@@ -39,7 +39,7 @@ struct LoginPage: View {
                         Spacer()
                         PrimaryButton(
                             title: "Login",
-                            action: { viewModel.input(.tapLoginButton()) },
+                            action: { viewModel.input(.tapLoginButton) },
                             isEnabled: viewModel.binding(get: \.loginButtonEnabled)
                         )
                         Spacer()

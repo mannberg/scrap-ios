@@ -7,18 +7,25 @@
 //
 
 import SwiftUI
+import Combine
 import IsValid
 import scrap_client_api
 
 class LoginPageViewModel: ObservableObject, ViewModel {
     
-    init(userState: Binding<RootViewModel.UserState>) {
+    init(
+        userState: Binding<RootViewModel.UserState>,
+        sideEffects: SideEffects = .live
+    ) {
         self.userState = userState
+        self.sideEffects = sideEffects
     }
+    
+    var sideEffects: SideEffects
     
     func input(_ action: LoginPageViewModel.Action) {
         switch action {
-        case .tapLoginButton(let request):
+        case .tapLoginButton:
             guard loginButtonEnabled else {
                 return
             }
@@ -26,14 +33,11 @@ class LoginPageViewModel: ObservableObject, ViewModel {
             isShowingLoadingSpinner = true
             registerButtonEnabled = false
             
-            let dummy = UserLoginCandidate(email: "", password: "")
-            
-            //TODO: Add Cancellable
-            _ = request(dummy).sink { [weak self] completion in
+            loginRequestCancellable = sideEffects.login(userToLogin).sink { [weak self] completion in
                 self?.isShowingLoadingSpinner = false
                 self?.registerButtonEnabled = true
             } receiveValue: { token in
-                //save login token
+                
             }
 
         case .tapGoToRegisterButton:
@@ -65,11 +69,38 @@ class LoginPageViewModel: ObservableObject, ViewModel {
     private var isValidPassword: Bool {
         IsValid.password(self.password)
     }
+    
+    private var userToLogin: UserLoginCandidate {
+        .init(
+            email: email,
+            password: password
+        )
+    }
+    
+    
+    private var loginRequestCancellable: AnyCancellable?
+}
+
+//MARK: Side Effects
+extension LoginPageViewModel {
+    struct SideEffects {
+        var login: LoginRequest
+    }
+}
+
+extension LoginPageViewModel.SideEffects {
+    static var live: Self = .init(login: Current.api.login)
+    
+    static var mock: Self = .init { _ in
+        Just(Token(value: ""))
+            .setFailureType(to: API.Error.self)
+            .eraseToAnyPublisher()
+    }
 }
 
 extension LoginPageViewModel {
     enum Action {
-        case tapLoginButton(request: LoginRequest = Current.api.login)
+        case tapLoginButton
         case tapGoToRegisterButton
         case setEmailAdress(_ value: String)
         case setPassword(_ value: String)
