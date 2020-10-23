@@ -19,7 +19,11 @@ struct RootView: View {
                     viewModel.input(.didTapClearTokenButton)
                 }
             }
-        default:
+        case .needsToRegister:
+            RegisterPage().transition(.move(edge: .bottom))
+        case .needsToLogin:
+            LoginPage().transition(.move(edge: .bottom))
+        case .undetermined:
             RegisterPage().transition(.move(edge: .bottom))
         }
     }

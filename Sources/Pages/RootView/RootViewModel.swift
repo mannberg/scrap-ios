@@ -34,7 +34,7 @@ class RootViewModel: ObservableObject, ViewModel {
         self.sideEffects = sideEffects
         
         sideEffects.hasToken
-            .map { $0 ? .loggedIn : .needsToRegister }
+            .map { $0 ? .loggedIn : ( sideEffects.isFirstTimeLaunch() ? .needsToRegister : .needsToLogin) }
             .assign(to: \.userState, on: self)
             .store(in: &cancellables)
     }
@@ -51,6 +51,7 @@ extension RootViewModel {
     struct SideEffects {
         var hasToken: CurrentValueSubject<Bool, Never>
         var clearToken: () -> Void
+        var isFirstTimeLaunch: () -> Bool
     }
 }
 
@@ -58,7 +59,16 @@ extension RootViewModel.SideEffects {
     static var live: Self {
         Self(
             hasToken: Current.api.hasToken,
-            clearToken: { Current.api.clearToken() }
+            clearToken: { Current.api.clearToken() },
+            isFirstTimeLaunch: { false }
+        )
+    }
+    
+    static var mock: Self {
+        Self(
+            hasToken: .init(true),
+            clearToken: { fatalError("Not implemented!") },
+            isFirstTimeLaunch: { fatalError("Not implemented!") }
         )
     }
 }
