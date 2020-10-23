@@ -46,13 +46,27 @@ struct LoginPage: View {
                     }
                     .padding([.top, .bottom], 15)
                     
-                    Button("Register a new account!") {
-                        withAnimation {
-                            viewModel.input(.tapGoToRegisterButton)
-                        }
+                    Button(action:  { withAnimation {
+                        viewModel.input(.tapGoToRegisterButton)
+                    }}) {
+                        Text("Register a new account!")
+                            .font(.subheadline)
+                            .foregroundColor(Color("PrimaryButtonEnabled"))
                     }
+                    .padding(.bottom, 20)
                 }
                 Spacer()
+            }
+            .background(Color("Background").edgesIgnoringSafeArea(.all))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        Text("Login")
+                            .font(.headline)
+                            
+                    }
+                }
             }
         }
     }

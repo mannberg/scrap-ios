@@ -24,10 +24,10 @@ struct RootView: View {
                 userState: $viewModel.userState,
                 sideEffects: .live
             ))
-            .transition(.move(edge: .bottom))
+            .transition(.slide)
         case .needsToLogin:
             LoginPage(viewModel: .init(userState: $viewModel.userState))
-                .transition(.move(edge: .bottom))
+                .transition(.slide)
         case .undetermined:
             Text("Hey!")
         }
