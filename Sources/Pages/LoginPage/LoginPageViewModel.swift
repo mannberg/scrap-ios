@@ -36,9 +36,7 @@ class LoginPageViewModel: ObservableObject, ViewModel {
             loginRequestCancellable = sideEffects.login(userToLogin).sink { [weak self] completion in
                 switch completion {
                 case .failure(let error):
-                    if case .server(let errorMessage) = error {
-                        self?.errorMessage = errorMessage
-                    }
+                    error.toString().map { self?.errorMessage = $0 }
                 default:
                     break
                 }
